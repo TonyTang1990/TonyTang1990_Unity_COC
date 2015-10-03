@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &172934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 472562}
+  - 114: {fileID: 11493008}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &472562
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11493008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e7019e6f1403d48b76c00e9ea57759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mColumns: 64
+  mRows: 64
+  mTerrainTiles:
+  - {fileID: 105842, guid: b07c3ff5bb514dd49ac812db2a2ff01b, type: 2}
+  - {fileID: 165878, guid: 1e415f04427d0a644bda4de43f65fadb, type: 2}
+  - {fileID: 119856, guid: f3a0669191267dc49a1856b62a0f8bd3, type: 2}
+  - {fileID: 101996, guid: fc73669a5332efe4bad4bd48a713966f, type: 2}
+  - {fileID: 161950, guid: 1705db07aae84554aa22e54ad6fd1180, type: 2}
+  mBuildings:
+  - {fileID: 0}
+  - {fileID: 0}
+  mSoldiers:
+  - {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 172934}
+  m_IsPrefabParent: 1
