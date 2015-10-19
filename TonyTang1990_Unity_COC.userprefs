@@ -1,51 +1,25 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Game\GameManager.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Utilities\VisualUlities.cs">
     <Files>
-      <File FileName="Assets\Script\Game\Map\MapManager.cs" Line="181" Column="43" />
-      <File FileName="Assets\Script\Game\Building\House.cs" Line="140" Column="37" />
-      <File FileName="Assets\Script\Game\Building\BuildingIdleState.cs" Line="19" Column="2" />
-      <File FileName="Assets\Script\Game\Building\BuildingAttackState.cs" Line="22" Column="3" />
-      <File FileName="Assets\Script\Game\GameManager.cs" Line="138" Column="34" />
-      <File FileName="Assets\Script\Game\Building\Building.cs" Line="152" Column="16" />
-      <File FileName="Assets\Script\Game\Soldier\Soldier.cs" Line="132" Column="3" />
-      <File FileName="Assets\Script\Game\Soldier\ZomBunny.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Building\Drawer.cs" Line="48" Column="3" />
-      <File FileName="Assets\Script\Game\Building\Wall.cs" Line="25" Column="1" />
-      <File FileName="Assets\Script\Game\Building\BuildingState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\UI\HouseButton.cs" Line="8" Column="1" />
-      <File FileName="Assets\Script\UI\WallButton.cs" Line="8" Column="75" />
-      <File FileName="Assets\Script\UI\HellephantButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\UI\DrawerButton.cs" Line="8" Column="56" />
-      <File FileName="Assets\Script\Input\InputManager.cs" Line="67" Column="45" />
-      <File FileName="Assets\Script\Game\Camera\CameraController.cs" Line="33" Column="1" />
-      <File FileName="Assets\Script\UI\ZomBunnyButton.cs" Line="8" Column="54" />
+      <File FileName="Assets\Script\Game\Soldier\ZomBunny.cs" Line="4" Column="34" />
+      <File FileName="Assets\Script\Game\Soldier\SoldierAttackState.cs" Line="17" Column="37" />
+      <File FileName="Assets\Script\Game\Building\BuildingAttackState.cs" Line="14" Column="41" />
+      <File FileName="Assets\Script\Game\Building\House.cs" Line="5" Column="2" />
+      <File FileName="Assets\Script\Game\Soldier\SoldierMoveState.cs" Line="16" Column="13" />
+      <File FileName="Assets\Script\Game\Soldier\Soldier.cs" Line="165" Column="28" />
+      <File FileName="Assets\Script\Game\Soldier\Hellephant.cs" Line="4" Column="36" />
+      <File FileName="Assets\Script\Game\Building\Building.cs" Line="11" Column="10" />
+      <File FileName="Assets\Script\Utilities\VisualUlities.cs" Line="47" Column="18" />
+      <File FileName="Assets\Script\Game\Camera\CameraController.cs" Line="33" Column="5" />
+      <File FileName="Assets\Script\Game\Map\MapManager.cs" Line="204" Column="5" />
+      <File FileName="Assets\Script\Game\Map\TerrianTile.cs" Line="17" Column="3" />
+      <File FileName="Assets\Script\Game\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Input\InputManager.cs" Line="14" Column="3" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="Script" expanded="True">
-              <Node name="Game" expanded="True">
-                <Node name="Building" expanded="True" />
-                <Node name="Camera" expanded="True" />
-                <Node name="Map" expanded="True" />
-                <Node name="Soldier" expanded="True" />
-                <Node name="GameManager.cs" selected="True" />
-              </Node>
-              <Node name="Input" expanded="True" />
-              <Node name="UI" expanded="True" />
-              <Node name="Utilities" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="D:\Unity_Study\COC\TonyTang1990_Unity_COC\Assets\Script\Game\Building\BuildingAttackState.cs" line="15" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

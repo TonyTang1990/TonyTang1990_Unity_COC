@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour {
 	{
 		mLookDirection = mTargetObject.transform.position - transform.position;
 		mLookDirection.Normalize ();
-		VisualUlities.VUInstance.Draw3DLine (transform.position, mTargetObject.transform.position);
+		//VisualUlities.VUInstance.Draw3DLine (transform.position, mTargetObject.transform.position);
 
 		if (Input.GetKey (KeyCode.U)) {
 			Camera.main.orthographicSize += mZoomSpeed * Time.deltaTime;

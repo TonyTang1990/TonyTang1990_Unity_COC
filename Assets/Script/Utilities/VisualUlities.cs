@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class VisualUlities : MonoBehaviour {
 
 	public static VisualUlities VUInstance = null;
 
 	private GameObject mLineObject;
+
 	private LineRenderer mLineRender;
+
+	private int mIndexNumber = 0;
 
 	void Awake()
 	{
@@ -27,29 +31,28 @@ public class VisualUlities : MonoBehaviour {
 	public void Init()
 	{
 		if (mLineRender == null) {
-			mLineRender = gameObject.AddComponent<LineRenderer>();
-			mLineRender.enabled = false;
-			mLineRender.SetColors(new Color(255,0,0), new Color(255,0,0));
-			mLineRender.SetWidth(1.0f,1.0f);
-		} else {
+			mLineRender = gameObject.AddComponent<LineRenderer> ();
+			mLineRender.enabled = true;
+			mLineRender.SetColors (new Color (255, 255, 0), new Color (255, 255, 0));
+			mLineRender.SetWidth (0.5f, 0.5f);
+		}else {
 			Debug.Log("mLineRender has already been Inited");
 		}
 	}
 	
-	public void Draw3DLine(Vector3 startposition, Vector3 endPosition)
+	public void Draw3DLine(Vector3 position)
 	{
-		mLineRender.enabled = true;
-		mLineRender.SetPosition (0, startposition);
-		mLineRender.SetPosition (1, endPosition);
+		mLineRender.SetVertexCount (mIndexNumber+1);
+		mLineRender.SetPosition (mIndexNumber, position);
+		mIndexNumber++;
 	}
-	
-	public void SetLineWidth(float startwidth, float endwidth)
+
+	public void DestroyAllLines()
 	{
-		if (startwidth > 0.0f && endwidth > 0.0f) {
-			mLineRender.SetWidth (startwidth, endwidth);
-		}
+		mIndexNumber = 0;
+		mLineRender.SetVertexCount(mIndexNumber);
 	}
-	
+
 	public void DisableLineRender()
 	{
 		mLineRender.enabled = false;

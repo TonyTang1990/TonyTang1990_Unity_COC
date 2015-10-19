@@ -42,6 +42,8 @@ public class Soldier : MonoBehaviour {
 	public float mAttackDistance;
 
 	public float mSHP;
+	
+	public GameObject mBullet;
 
 	public float DistanceToTarget {
 		get {
@@ -61,7 +63,7 @@ public class Soldier : MonoBehaviour {
 			mAttackTimer = value;
 		}
 	}
-	private float mAttackTimer = 0.0f;
+	protected float mAttackTimer = 0.0f;
 
 	public Building AttackTarget {
 		get {
@@ -72,8 +74,6 @@ public class Soldier : MonoBehaviour {
 		}
 	}
 	protected Building mAttackingObject;
-	
-	public GameObject mBullet;
 
 	public Animator Anim {
 		get {
@@ -100,7 +100,7 @@ public class Soldier : MonoBehaviour {
 			mIsDead = value;
 		}
 	}
-	private bool mIsDead = false;
+	protected bool mIsDead = false;
 
 	private TextMesh mHPText;
 
@@ -160,6 +160,37 @@ public class Soldier : MonoBehaviour {
 	public virtual void DestroyItself()
 	{
 		Destroy (gameObject);
+	}
+	
+	public void MakeDecision()
+	{
+		if (gameObject != null && !mIsDead) {
+			mAttackingObject= GameManager.mGameInstance.ObtainAttackObject (this);
+		}
+	}
+	
+	public bool IsTargetInAttackRange()
+	{
+		if (mAttackingObject != null) {
+			mDistanceToTarget = Vector3.Distance (transform.position, mAttackingObject.mBI.Position);
+			if (mDistanceToTarget > mAttackDistance) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public void Attack()
+	{
+		mAttackTimer += Time.deltaTime;
+		if (mAttackTimer >= mAttackInterval) {
+			mAttackTimer = 0.0f;
+			GameObject bl = MonoBehaviour.Instantiate (mBullet, transform.position, Quaternion.identity) as GameObject;
+			bl.GetComponent<Bullet> ().AttackTarget = mAttackingObject;
+		}
 	}
 }
 

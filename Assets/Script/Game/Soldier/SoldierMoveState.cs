@@ -13,7 +13,7 @@ public class SoldierMoveState : SoldierState {
 	public void UpdateState()
 	{
 		if (!mSoldier.IsDead) {
-			LookForMoveTarget ();
+			mSoldier.MakeDecision ();
 			Move ();
 		} else {
 			ToDeadState();
@@ -22,6 +22,7 @@ public class SoldierMoveState : SoldierState {
 
 	public void ToAttackState()
 	{
+		mSoldier.AttackTimer = mSoldier.mAttackInterval;
 		mSoldier.Anim.SetBool("SoldierMoving",false);
 		mSoldier.mSCurrentState = mSoldier.mSAttackState as SoldierState;
 	}
@@ -38,30 +39,26 @@ public class SoldierMoveState : SoldierState {
 		mSoldier.mSCurrentState = mSoldier.mSDeadState;
 	}
 
-	private void LookForMoveTarget()
-	{
-		if (mSoldier.gameObject != null && !mSoldier.IsDead) {
-			mSoldier.AttackTarget = GameManager.mGameInstance.ObtainAttackObject (mSoldier);
-		}
-	}
-
 	private void Move()
 	{
-		if (mSoldier.AttackTarget != null) {
+		if (mSoldier.AttackTarget != null && !mSoldier.IsTargetInAttackRange()) {
 			Vector3 movedirection = mSoldier.AttackTarget.mBI.Position - mSoldier.transform.position;
 			movedirection.Normalize();
 			mSoldier.transform.LookAt (mSoldier.AttackTarget.mBI.Position);
 			Vector3 newposition = mSoldier.transform.position + movedirection * mSoldier.mSpeed * Time.deltaTime;
-			mSoldier.DistanceToTarget = Vector3.Distance(mSoldier.transform.position,mSoldier.AttackTarget.mBI.Position);
-			if (mSoldier.DistanceToTarget > mSoldier.mAttackDistance) {
+			//mSoldier.DistanceToTarget = Vector3.Distance(mSoldier.transform.position,mSoldier.AttackTarget.mBI.Position);
+			//if (mSoldier.DistanceToTarget > mSoldier.mAttackDistance) {
 				mSoldier.transform.position = newposition;
-			} else {
-				if( mSoldier.Anim != null )
-				{
-					mSoldier.AttackTimer = mSoldier.mAttackInterval;
-					ToAttackState();
-				}
-			}
+			//} else {
+				//if( mSoldier.Anim != null )
+				//{
+					//mSoldier.AttackTimer = mSoldier.mAttackInterval;				
+				//}
+			//}
+		}
+		else
+		{
+			ToAttackState();
 		}
 	}
 }

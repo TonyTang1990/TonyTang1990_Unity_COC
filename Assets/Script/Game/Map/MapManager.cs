@@ -189,6 +189,19 @@ public class MapManager : MonoBehaviour {
 			mBuildingsInfoInGame.Add(bd.GetComponent<Building>());
 			Debug.Log("bdi.Position" + bdi.Position);
 	    }
+
+		Vector3 startposition = mTerrainTilesScript [0, 0].gameObject.transform.position;
+		startposition.y += 0.5f;
+		Vector3 endposition = mTerrainTilesScript [mRows-1, mColumns-1].gameObject.transform.position;
+		endposition.y += 0.5f;
+		VisualUlities.VUInstance.Draw3DLine (startposition);
+		VisualUlities.VUInstance.Draw3DLine (endposition);
+		endposition = mTerrainTilesScript [0, mColumns - 1].gameObject.transform.position;
+		endposition.y += 0.5f;
+		VisualUlities.VUInstance.Draw3DLine (endposition);
+		VisualUlities.VUInstance.Draw3DLine (startposition);
+
+		//VisualUlities.VUInstance.DestroyAllLines ();
 	}
 
 	// Use this for initialization
