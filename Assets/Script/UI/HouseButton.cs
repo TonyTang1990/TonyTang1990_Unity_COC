@@ -5,6 +5,6 @@ public class HouseButton : MonoBehaviour{
 	public void onClick()
 	{
 		Debug.Log ("HouseButton::onClick");
-		MapManager.mMapInstance.setCurrenctSelectedBuilding ((int)BuildingType.E_HOUSE);
+		GameManager.mGameInstance.setCurrenctSelectedBuilding ((int)BuildingType.E_HOUSE);
 	}
 }

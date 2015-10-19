@@ -9,13 +9,49 @@ public class House : Building {
 
 	public float mAttackDistance;
 
+	public Soldier AttackingObject {
+		get {
+			return mAttackingObject;
+		}
+		set
+		{
+			mAttackingObject = value;
+		}
+	}
 	private Soldier mAttackingObject;
 
+	public bool IsAttacking
+	{
+		get
+		{
+			return mIsAttacking;
+		}
+		set
+		{
+			mIsAttacking = value;
+		}
+	}
 	private bool mIsAttacking = false;
 
-	protected float mDistanceToTarget = 0.0f;
-	
-	protected float mAttackTimer = 0.0f;
+	public float DistanceToTarget {
+		get {
+			return mDistanceToTarget;
+		}
+		set {
+			mDistanceToTarget = value;
+		}
+	}
+	private float mDistanceToTarget = 0.0f;
+
+	public float AttackTimer {
+		get {
+			return mAttackTimer;
+		}
+		set {
+			mAttackTimer = value;
+		}
+	}
+	private float mAttackTimer = 0.0f;
 	
 	private Bullet mHouseBulletScript;
 
@@ -42,17 +78,24 @@ public class House : Building {
 	{
 		mSpawnPoint = gameObject.transform.Find ("BulletSpawnPoint").gameObject.transform.position;
 	}
-	
+
 	public void Attack()
 	{
-		GameObject bl = Instantiate (mHouseBullet, mSpawnPoint, Quaternion.identity) as GameObject;
-		bl.GetComponent<Bullet>().AttackSoldier = mAttackingObject;
+		if (mIsAttacking) {
+			mAttackTimer += Time.deltaTime;
+			if (mAttackTimer >= mAttackInterval) {
+				mAttackTimer = 0.0f;
+				GameObject bl = Instantiate (mHouseBullet, mSpawnPoint, Quaternion.identity) as GameObject;
+				bl.GetComponent<Bullet>().AttackSoldier = mAttackingObject;
+			}
+		}
 	}
 
 	public void Update()
 	{
+		/*
 		if (gameObject != null && !mBI.IsDestroyed) {
-			mAttackingObject = MapManager.mMapInstance.ObtainAttackSoldier (this);
+			mAttackingObject = GameManager.mGameInstance.ObtainAttackSoldier (this);
 
 			if(mAttackingObject != null && mAttackable)
 			{
@@ -73,5 +116,6 @@ public class House : Building {
 				}
 			}
 		}
+		*/
 	}
 }

@@ -44,13 +44,13 @@ public class InputManager : MonoBehaviour {
 		*/
 			if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject ()) {
 				mInputTimer = 0.0f;
-				if (MapManager.mMapInstance.isSoldierSelected) {
+				if (GameManager.mGameInstance.isSoldierSelected) {
 					Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 					RaycastHit hit;
 					if (Physics.Raycast (ray, out hit, Mathf.Infinity, LayerMask.GetMask ("TerrainTile"))) {
 						if (hit.collider) {
 							Debug.Log ("hit.point = " + hit.point);
-							MapManager.mMapInstance.DeploySoldier (hit.point);
+							GameManager.mGameInstance.DeploySoldier (hit.point);
 						}
 					}
 				}
@@ -64,15 +64,15 @@ public class InputManager : MonoBehaviour {
 				Debug.Log ("KeyCode.O Pressed");
 				mInputTimer = 0.0f;
 				if (MapManager.mMapInstance.IsTerrainAvaibleToBuild ()) {
-					MapManager.mMapInstance.BuildBuilding ();
+					GameManager.mGameInstance.BuildBuilding ();
 				}
 			}
 
 			if (Input.GetKey (KeyCode.F1) && mInputTimer > mValidInputDeltaTime) {
 				Debug.Log ("KeyCode.F1 Pressed");
 				mInputTimer = 0.0f;
-				if (!MapManager.mMapInstance.isBuildingSelected) {
-					MapManager.mMapInstance.setCurrenctSelectedBuilding (0);
+				if (!GameManager.mGameInstance.isBuildingSelected) {
+					GameManager.mGameInstance.setCurrenctSelectedBuilding (0);
 				}
 			}
 		}

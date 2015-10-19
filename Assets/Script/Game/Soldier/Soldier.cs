@@ -9,6 +9,7 @@ public enum SoldierType
 	E_ZOMBUNNY = 1
 }
 
+/*
 [Serializable]
 public enum SoldierState
 {
@@ -16,7 +17,7 @@ public enum SoldierState
 	E_MOVING = 1,
 	E_ATTACKING
 }
-
+*/
 [Serializable]
 public enum PreferAttackType
 {
@@ -30,27 +31,64 @@ public class Soldier : MonoBehaviour {
 
 	//public SoldierType mST;
 	
-	public SoldierState mSS;
+	//public SoldierState mSS;
 
 	public float mSpeed;
 
 	public PreferAttackType mPreferAttackType;
 
 	public float mAttackInterval;
-
+	
 	public float mAttackDistance;
 
 	public float mSHP;
 
-	protected float mDistanceToTarget = 0.0f;
+	public float DistanceToTarget {
+		get {
+			return mDistanceToTarget;
+		}
+		set {
+			mDistanceToTarget = value;
+		}
+	}
+	private float mDistanceToTarget = 0.0f;
 
-	protected float mAttackTimer = 0.0f;
-	
+	public float AttackTimer {
+		get {
+			return mAttackTimer;
+		}
+		set {
+			mAttackTimer = value;
+		}
+	}
+	private float mAttackTimer = 0.0f;
+
+	public Building AttackTarget {
+		get {
+			return mAttackingObject;
+		}
+		set {
+			mAttackingObject = value;
+		}
+	}
 	protected Building mAttackingObject;
 	
 	public GameObject mBullet;
-	
+
+	public Animator Anim {
+		get {
+			return mAnim;
+		}
+	}
 	protected Animator mAnim;
+
+	[HideInInspector] public SoldierState mSCurrentState;
+
+	[HideInInspector] public SoldierAttackState mSAttackState;
+
+	[HideInInspector] public SoldierDeadState mSDeadState;
+
+	[HideInInspector] public SoldierMoveState mSMoveState;
 
 	public bool IsDead{
 		get
@@ -63,8 +101,6 @@ public class Soldier : MonoBehaviour {
 		}
 	}
 	private bool mIsDead = false;
-
-	//private Animator mAnim;
 
 	private TextMesh mHPText;
 
@@ -84,21 +120,28 @@ public class Soldier : MonoBehaviour {
 		mHPText.text = "HP: " + mSHP;
 
 		mAnim = GetComponent<Animator>();
+
+		mSAttackState = new SoldierAttackState (this);
+
+		mSMoveState = new SoldierMoveState (this);
+
+		mSDeadState = new SoldierDeadState (this);
+	}
+
+	public void Start()
+	{
+		mSCurrentState = mSMoveState;
 	}
 
 	public virtual void Update ()
 	{
 		if (gameObject) {
 			mHPText.text = "HP: " + mSHP;
+			mSCurrentState.UpdateState();
 		}
 	}
 
-	public virtual void Move ()
-	{
-
-	}
-
-	public virtual void TakeDamage (float damage)
+	public void TakeDamage (float damage)
 	{
 		if (mSHP > damage) {
 			mSHP -= damage;
@@ -108,14 +151,15 @@ public class Soldier : MonoBehaviour {
 		}
 	}
 
+	//AniamtionEvent call
+	public void StartSinking ()
+	{
+		Invoke ("DestroyItself",3.0f);
+	}
+
 	public virtual void DestroyItself()
 	{
 		Destroy (gameObject);
 	}
-	
-   public virtual void Attack()
-   {
-	    
-   }
 }
 

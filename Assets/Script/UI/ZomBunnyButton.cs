@@ -5,6 +5,6 @@ public class ZomBunnyButton : MonoBehaviour {
 	public void onClick()
 	{
 		Debug.Log ("ZomBunnyButton::onClick");
-		MapManager.mMapInstance.setCurrentSelectedSoldier (SoldierType.E_ZOMBUNNY);
+		GameManager.mGameInstance.setCurrentSelectedSoldier (SoldierType.E_ZOMBUNNY);
 	}
 }

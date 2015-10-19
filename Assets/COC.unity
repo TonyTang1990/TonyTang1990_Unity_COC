@@ -444,6 +444,30 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11471946, guid: 54ef1b85d5022874488b2b82d8330dc5, type: 2}
+      propertyPath: mPreferAttackType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471946, guid: 54ef1b85d5022874488b2b82d8330dc5, type: 2}
+      propertyPath: mAttackInterval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471946, guid: 54ef1b85d5022874488b2b82d8330dc5, type: 2}
+      propertyPath: mAttackDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471946, guid: 54ef1b85d5022874488b2b82d8330dc5, type: 2}
+      propertyPath: mSHP
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471946, guid: 54ef1b85d5022874488b2b82d8330dc5, type: 2}
+      propertyPath: mBullet
+      value: 
+      objectReference: {fileID: 197372, guid: 7ad623aeba4c33941a2f0ef6c386cc29, type: 2}
+    - target: {fileID: 11471946, guid: 54ef1b85d5022874488b2b82d8330dc5, type: 2}
+      propertyPath: mSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54ef1b85d5022874488b2b82d8330dc5, type: 2}
   m_IsPrefabParent: 0
@@ -1525,6 +1549,30 @@ Prefab:
     - target: {fileID: 197974, guid: 6fd694fb865e5524486da2da372b9730, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11443200, guid: 6fd694fb865e5524486da2da372b9730, type: 2}
+      propertyPath: mPreferAttackType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11443200, guid: 6fd694fb865e5524486da2da372b9730, type: 2}
+      propertyPath: mAttackInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11443200, guid: 6fd694fb865e5524486da2da372b9730, type: 2}
+      propertyPath: mAttackDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11443200, guid: 6fd694fb865e5524486da2da372b9730, type: 2}
+      propertyPath: mSHP
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 11443200, guid: 6fd694fb865e5524486da2da372b9730, type: 2}
+      propertyPath: mBullet
+      value: 
+      objectReference: {fileID: 197372, guid: 7ad623aeba4c33941a2f0ef6c386cc29, type: 2}
+    - target: {fileID: 11443200, guid: 6fd694fb865e5524486da2da372b9730, type: 2}
+      propertyPath: mSpeed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6fd694fb865e5524486da2da372b9730, type: 2}

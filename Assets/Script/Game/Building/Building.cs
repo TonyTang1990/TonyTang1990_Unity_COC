@@ -93,6 +93,12 @@ public class Building : MonoBehaviour {
 	
 	protected Vector3 mSpawnPoint;
 
+	[HideInInspector] public BuildingState mBCurrentState;
+	
+	[HideInInspector] public BuildingAttackState mBAttackState;
+	
+	[HideInInspector] public BuildingIdleState mBIdleState;
+
 	public virtual void Awake()
 	{
 		Debug.Log ("Building::Awake()");
@@ -101,6 +107,20 @@ public class Building : MonoBehaviour {
 			Debug.Log("mHPText == null");
 		}
 		mHPText.text = "HP: " + mBI.mBHP;
+	}
+
+	public void Start()
+	{
+		mBAttackState = new BuildingAttackState (this);
+		mBIdleState = new BuildingIdleState (this);
+		mBCurrentState = mBIdleState;
+	}
+
+	public void Update()
+	{
+		if (gameObject) {
+			mBCurrentState.UpdateState();
+		}
 	}
 
 	public virtual void FixedUpdate()
@@ -115,6 +135,7 @@ public class Building : MonoBehaviour {
 		if (mBI.mBHP > damage) {
 			mBI.mBHP -= damage;
 		} else {
+			Debug.Log("IsDestroyed == true");
 			mBI.mBHP = 0;
 			mBI.IsDestroyed = true;
 		}

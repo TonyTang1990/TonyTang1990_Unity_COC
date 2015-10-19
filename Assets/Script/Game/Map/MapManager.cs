@@ -11,6 +11,11 @@ public class MapManager : MonoBehaviour {
 	
 	public static MapManager mMapInstance = null;
 
+	public Map Map {
+		get {
+			return mMap;
+		}
+	}
 	private Map mMap;
 
 	public int getColumns
@@ -45,51 +50,46 @@ public class MapManager : MonoBehaviour {
 	
 	public List<GameObject> mSoldiers;
 
-	private List<GameObject> mBuldingsInGame;
+	public List<GameObject> BuildingsInGame {
+		get {
+			return mBuildingsInGame;
+		}
+	}
+	private List<GameObject> mBuildingsInGame;
 
-	private List<Building> mBuldingsInfoInGame;
+	public List<Building> BuildingsInfoInGame {
+		get {
+			return mBuildingsInfoInGame;
+		}
+	}
+	private List<Building> mBuildingsInfoInGame;
 
+	public List<GameObject> SoldiersInGame {
+		get {
+			return mSoldiersInGame;
+		}
+	}
 	private List<GameObject> mSoldiersInGame;
 
+	public List<Soldier> SoldiersScriptInGame {
+		get {
+			return mSoldiersScriptInGame;
+		}
+	}
 	private List<Soldier> mSoldiersScriptInGame;
 	
 	private TerrianTile[,] mTerrainTilesScript;
 
+	public bool[,] MapOccupied
+	{
+		get
+		{
+			return mMapOccupied;
+		}
+	}
 	private bool[,] mMapOccupied;
 
 	private Transform mMapHolder;
-
-	private GameObject mCurrentSelectedBuilding;
-
-	private SoldierType mCurrentSelectedSoldierType;
-
-	public bool isBuildingSelected
-	{
-		get
-		{
-			return mIsBuildingSelected;
-		}
-		set
-		{
-			mIsBuildingSelected = value;
-		}
-	}
-	private bool mIsBuildingSelected = false;
-	
-	public bool isSoldierSelected
-	{
-		get
-		{
-			return mIsSoldierSelected;
-		}
-		set
-		{
-			mIsSoldierSelected = value;
-		}
-	}
-	private bool mIsSoldierSelected = false;
-
-	private Vector2 mCurrentOccupiedIndex;
 
 	private string mMapSavePath;
 
@@ -104,8 +104,8 @@ public class MapManager : MonoBehaviour {
 		mMapSavePath = Application.persistentDataPath + "/mapInfo.dat";
 		Debug.Log ("mMapSavePath = " + mMapSavePath);
 
-		mBuldingsInGame = new List<GameObject>();
-		mBuldingsInfoInGame = new List<Building> ();
+		mBuildingsInGame = new List<GameObject>();
+		mBuildingsInfoInGame = new List<Building> ();
 		mSoldiersInGame = new List<GameObject> ();
 		mSoldiersScriptInGame = new List<Soldier>();
 	}
@@ -124,7 +124,7 @@ public class MapManager : MonoBehaviour {
 		}
 	}
 	
-	void SaveMap()
+	public void SaveMap()
 	{
 		Debug.Log("SaveMap()");
 		if (!File.Exists (mMapSavePath)) {
@@ -185,20 +185,10 @@ public class MapManager : MonoBehaviour {
 			position = new Vector3(bdi.Position.x,bdi.Position.y,bdi.Position.z);
 			bd = Instantiate(mBuildings[(int)bdi.getBuildingType()],position,Quaternion.identity) as GameObject;
 			bd.GetComponent<Building>().mBI.Position = position;
-			mBuldingsInGame.Add(bd);
-			mBuldingsInfoInGame.Add(bd.GetComponent<Building>());
+			mBuildingsInGame.Add(bd);
+			mBuildingsInfoInGame.Add(bd.GetComponent<Building>());
 			Debug.Log("bdi.Position" + bdi.Position);
 	    }
-	}
-
-	public void setCurrenctSelectedBuilding(int index)
-	{
-		if (mCurrentSelectedBuilding) {
-			Destroy(mCurrentSelectedBuilding);
-		}
-		mCurrentSelectedBuilding = Instantiate(mBuildings [index],new Vector3(0.0f,100.0f,0.0f),Quaternion.identity) as GameObject;
-		mIsBuildingSelected = true;
-		mIsSoldierSelected = false;
 	}
 
 	// Use this for initialization
@@ -212,21 +202,7 @@ public class MapManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (mIsBuildingSelected) {
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, Mathf.Infinity, LayerMask.GetMask ("TerrainTile"))) {
-				if(hit.collider)
-				{
-					//hit.collider.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0);
-					Vector3 tempselectposition = hit.collider.transform.position;
-					tempselectposition.y += 0.5f;
-					mCurrentSelectedBuilding.transform.position = tempselectposition;
-					mCurrentSelectedBuilding.GetComponent<Building>().mBI.Position = tempselectposition;
-					mCurrentOccupiedIndex = hit.collider.GetComponent<TerrianTile>().getIndex();
-				}
-			}
-		}
+
 	}
 
 	private bool isValideTerrainIndex(int row, int column)
@@ -240,17 +216,18 @@ public class MapManager : MonoBehaviour {
 	public bool IsTerrainAvaibleToBuild()
 	{
 		bool isavaliable = true;
-		if (mCurrentSelectedBuilding) {
-			Building buildinginfo = mCurrentSelectedBuilding.GetComponent<Building>();
+		if (GameManager.mGameInstance.CurrentSelectedBuilding) {
+			Building buildinginfo = GameManager.mGameInstance.CurrentSelectedBuilding.GetComponent<Building>();
+			Vector2 currentoccupiedindex = GameManager.mGameInstance.CurrentOccupiedIndex;
 			for(int i = 0; i < buildinginfo.mBI.getSize().mRow; i++)
 			{
 				for(int j = 0; j < buildinginfo.mBI.getSize().mColumn; j++)
 				{
-					if( isValideTerrainIndex((int)mCurrentOccupiedIndex.x + i, (int)mCurrentOccupiedIndex.y + j) )
+					if( isValideTerrainIndex((int)currentoccupiedindex.x + i, (int)currentoccupiedindex.y + j) )
 					{
-						if(mMapOccupied[(int)mCurrentOccupiedIndex.x + i, (int)mCurrentOccupiedIndex.y + j])
+						if(mMapOccupied[(int)currentoccupiedindex.x + i, (int)currentoccupiedindex.y + j])
 						{
-							Debug.Log(string.Format("mMapOccupied[{0}][{1}] = {2}",(int)mCurrentOccupiedIndex.x + i,(int)mCurrentOccupiedIndex.y + j,mMapOccupied[(int)mCurrentOccupiedIndex.x + i, (int)mCurrentOccupiedIndex.y + j]));
+							Debug.Log(string.Format("mMapOccupied[{0}][{1}] = {2}",(int)currentoccupiedindex.x + i,(int)currentoccupiedindex.y + j,mMapOccupied[(int)currentoccupiedindex.x + i, (int)currentoccupiedindex.y + j]));
 							isavaliable = false;
 						}
 					}
@@ -266,105 +243,7 @@ public class MapManager : MonoBehaviour {
 		return isavaliable;
 	}
 
-	public void BuildBuilding()
-	{
-		Debug.Log ("mCurrentOccupiedIndex.x = " + mCurrentOccupiedIndex.x);
-		Debug.Log ("mCurrentOccupiedIndex.y = " + mCurrentOccupiedIndex.y);
-
-		if (mCurrentSelectedBuilding) {
-			Building buildinginfo = mCurrentSelectedBuilding.GetComponent<Building>() as Building;
-
-			for( int i = 0 ; i < buildinginfo.mBI.getSize().mRow; i++ )
-			{
-				for( int j = 0; j < buildinginfo.mBI.getSize().mColumn; j++ )
-				{
-					mMapOccupied [(int)mCurrentOccupiedIndex.x + i, (int)mCurrentOccupiedIndex.y + j] = true;
-					mMap.setMapOccupiedInfo((int)mCurrentOccupiedIndex.x + i, (int)mCurrentOccupiedIndex.y + j, true);
-					//mTerrainTilesScript [(int)mCurrentOccupiedIndex.x + i, (int)mCurrentOccupiedIndex.y + j].setOccupiedBuilding (mCurrentSelectedBuilding);
-				}
-			}
-
-			mCurrentSelectedBuilding.GetComponent<Building>().UpdateChildPosition();
-
-			mMap.addBuilding(mCurrentSelectedBuilding.GetComponent<Building>().mBI);
-
-			mBuldingsInGame.Add(mCurrentSelectedBuilding);
-
-			mBuldingsInfoInGame.Add(mCurrentSelectedBuilding.GetComponent<Building>());
-
-			mCurrentSelectedBuilding = null;
-
-			mIsBuildingSelected = false;
-			
-			PrintAllOccupiedInfo ();
-
-			SaveMap ();
-		}
-	}
-	
-	public void setCurrentSelectedSoldier(SoldierType stp)
-	{
-		mCurrentSelectedSoldierType = stp;
-		mIsSoldierSelected = true;
-		mIsBuildingSelected = false;
-	}
-
-	public void DeploySoldier(Vector3 hitpoint)
-	{
-		GameObject go = SoldierFactory.SpawnSoldier(mCurrentSelectedSoldierType,hitpoint);
-        mSoldiersInGame.Add(go);
-		mSoldiersScriptInGame.Add(go.GetComponent<Soldier>());
-	}
-
-	public Building ObtainAttackObject(Soldier sod)
-	{
-		Building targetbuilding = null;
-		float shortestdistance = Mathf.Infinity;
-		float currentdistance = 0.0f;
-		foreach (Building bd in mBuldingsInfoInGame) {
-			if( bd.mBI.IsDestroyed )
-			{
-				//Debug.Log("IsDestroyed = " + bdi.IsDestroyed);
-				continue;
-			}
-			else
-			{
-				currentdistance = Vector3.Distance(bd.mBI.Position, sod.gameObject.transform.position);
-				if( currentdistance < shortestdistance )
-				{
-					shortestdistance = currentdistance;
-					targetbuilding = bd;
-				}
-			}
-		}
-		return targetbuilding;
-	}
-
-	public Soldier ObtainAttackSoldier(Building bd)
-	{
-		Soldier targetsoldier = null;
-		float shortestdistance = Mathf.Infinity;
-		float currentdistance = 0.0f;
-		foreach (Soldier so in mSoldiersScriptInGame) {
-			if( so.IsDead )
-			{
-				//Debug.Log("IsDestroyed = " + bdi.IsDestroyed);
-				continue;
-			}
-			else
-			{
-				currentdistance = Vector3.Distance(so.transform.position, bd.mBI.Position);
-				if( currentdistance < shortestdistance )
-				{
-					shortestdistance = currentdistance;
-					targetsoldier = so;
-				}
-			}
-		}
-		return targetsoldier;
-	}
-
-	void PrintAllOccupiedInfo()
+	public void PrintAllOccupiedInfo()
 	{
 		for(int i = 0; i < mRows; i++ )
 		{

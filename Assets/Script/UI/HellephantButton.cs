@@ -5,6 +5,6 @@ public class HellephantButton : MonoBehaviour {
 	public void onClick()
 	{
 		Debug.Log ("ZomBearButton::onClick");
-		MapManager.mMapInstance.setCurrentSelectedSoldier (SoldierType.E_HELLEPHANT);
+		GameManager.mGameInstance.setCurrentSelectedSoldier (SoldierType.E_HELLEPHANT);
 	}
 }
