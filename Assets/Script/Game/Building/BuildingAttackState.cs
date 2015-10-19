@@ -11,8 +11,10 @@ public class BuildingAttackState : BuildingState {
 
 	public void UpdateState()
 	{
-		if (mBuilding.Attackable) {
+		if (mBuilding.IsTargetAvalibleToAttack ()) {
 			Attack ();
+		} else {
+			ToIdleState();
 		}
 	}
 	
@@ -23,14 +25,11 @@ public class BuildingAttackState : BuildingState {
 	
 	public void ToIdleState()
 	{
-		
+		mBuilding.mBCurrentState = mBuilding.mBIdleState;
 	}
 
 	private void Attack()
 	{
-		if (mBuilding.GetType () is House) {
-			var building = mBuilding as House;
-			building.Attack();
-		}
+		mBuilding.Attack();
 	}
 }

@@ -135,6 +135,9 @@ public class GameManager : MonoBehaviour {
 	
 	public void setCurrentSelectedSoldier(SoldierType stp)
 	{
+		if (mCurrentSelectedBuilding) {
+			Destroy(mCurrentSelectedBuilding);
+		}
 		mCurrentSelectedSoldierType = stp;
 		mIsSoldierSelected = true;
 		mIsBuildingSelected = false;

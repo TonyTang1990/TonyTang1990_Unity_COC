@@ -85,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 130422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: -20, z: -3.42000008}
+  m_LocalPosition: {x: 3.53999996, y: -13.8400002, z: -4.56400013}
   m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children:
   - {fileID: 424190}
@@ -228,7 +228,7 @@ MonoBehaviour:
     mSize:
       mRow: 2
       mColumn: 2
-    mBHP: 20
+    mBHP: 10
   mAttackable: 1
   mHouseBullet: {fileID: 136182, guid: 08616df76fa4b8b4d9d2c43a2367448c, type: 2}
   mAttackInterval: 1
@@ -255,6 +255,14 @@ Prefab:
       propertyPath: mHouseBullet
       value: 
       objectReference: {fileID: 172872, guid: 08616df76fa4b8b4d9d2c43a2367448c, type: 2}
+    - target: {fileID: 0}
+      propertyPath: mAttackDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: mBI.mBHP
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130422}

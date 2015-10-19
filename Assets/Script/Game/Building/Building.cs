@@ -79,15 +79,8 @@ public class BuildingInfo
 public class Building : MonoBehaviour {
 
 	public BuildingInfo mBI;
-
-	public bool Attackable
-	{
-		get
-		{
-			return mAttackable;
-		}
-	}
-	public bool mAttackable = false;
+	
+	public bool mAttackable = true;
 
 	private TextMesh mHPText;
 	
@@ -109,16 +102,14 @@ public class Building : MonoBehaviour {
 		mHPText.text = "HP: " + mBI.mBHP;
 	}
 
-	public void Start()
+	public virtual void Start()
 	{
-		mBAttackState = new BuildingAttackState (this);
-		mBIdleState = new BuildingIdleState (this);
-		mBCurrentState = mBIdleState;
+
 	}
 
-	public void Update()
+	public virtual void Update()
 	{
-		if (gameObject) {
+		if (gameObject && mBCurrentState != null) {
 			mBCurrentState.UpdateState();
 		}
 	}
@@ -144,6 +135,21 @@ public class Building : MonoBehaviour {
 	public virtual void UpdateChildPosition()
 	{
 
+	}
+
+	public virtual bool CanAttack()
+	{
+		return false;
+	}
+
+	public virtual void Attack()
+	{
+
+	}
+
+	public virtual bool IsTargetAvalibleToAttack()
+	{
+		return false;
 	}
 	/*
 	void OnTriggerEnter(Collider other) {

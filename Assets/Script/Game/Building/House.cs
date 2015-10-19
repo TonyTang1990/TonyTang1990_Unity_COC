@@ -58,11 +58,21 @@ public class House : Building {
 	public override void Awake()
 	{
 		base.Awake ();
-
+		Debug.Log ("House::Awake()");
 		mSpawnPoint = gameObject.transform.Find ("BulletSpawnPoint").gameObject.transform.position;
 
 		mHouseBulletScript = GetComponent<Bullet> ();
+
+		mBAttackState = new BuildingAttackState (this);
+		mBIdleState = new BuildingIdleState (this);
 	}
+
+	public override void Start()
+	{
+		base.Start ();
+		mBCurrentState = mBIdleState;
+	}
+
 	
 	public override void FixedUpdate()
 	{
@@ -79,7 +89,32 @@ public class House : Building {
 		mSpawnPoint = gameObject.transform.Find ("BulletSpawnPoint").gameObject.transform.position;
 	}
 
-	public void Attack()
+	public override bool CanAttack()
+	{
+		if (gameObject != null && !mBI.IsDestroyed && mAttackable) {
+			mAttackingObject = GameManager.mGameInstance.ObtainAttackSoldier (this);
+			if(mAttackingObject!=null)
+			{
+				mDistanceToTarget = Vector3.Distance (transform.position, mAttackingObject.transform.position);
+				if (mDistanceToTarget > mAttackDistance) {
+					mIsAttacking = false;
+					return false;
+				} else {
+					mAttackTimer = mAttackInterval;
+					mIsAttacking = true;
+					return true;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public override void Attack()
 	{
 		if (mIsAttacking) {
 			mAttackTimer += Time.deltaTime;
@@ -91,8 +126,30 @@ public class House : Building {
 		}
 	}
 
-	public void Update()
+	public override bool IsTargetAvalibleToAttack()
 	{
+		if (mAttackingObject != null && !mAttackingObject.IsDead) {
+			return IsTargetInAttackRange();
+		} else {
+			return false;
+		}
+	}
+
+	private bool IsTargetInAttackRange()
+	{
+		float distancetotarget = Vector3.Distance (transform.position, mAttackingObject.transform.position);
+		if (distancetotarget > mAttackDistance) {
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	public override void Update()
+	{
+		base.Update ();
 		/*
 		if (gameObject != null && !mBI.IsDestroyed) {
 			mAttackingObject = GameManager.mGameInstance.ObtainAttackSoldier (this);
