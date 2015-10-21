@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour {
 		float shortestdistance = Mathf.Infinity;
 		float currentdistance = 0.0f;
 		foreach (Building bd in MapManager.mMapInstance.BuildingsInfoInGame) {
-			if( bd.mBI.IsDestroyed )
+			if( bd.mBI.IsDestroyed || bd.mBI.mBT == BuildingType.E_WALL)
 			{
 				//Debug.Log("IsDestroyed = " + bd.mBI.IsDestroyed);
 				continue;

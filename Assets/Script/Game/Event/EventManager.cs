@@ -38,5 +38,22 @@ public class EventManager : MonoBehaviour {
 		}
 	}
 
+	public static void StopListening(string eventname, UnityAction listener)
+	{
+		if (mEMInstance == null) {
+			return ;
+		}
+		UnityEvent thisevent = null;
+		if (mEMInstance.mEventDictionary.TryGetValue (eventname, out thisevent)) {
+			thisevent.RemoveListener(listener);
+		}
+	}
 
+	public static void TriggerEvent(string eventname)
+	{
+		UnityEvent thisevent = null;
+		if (mEMInstance.mEventDictionary.TryGetValue (eventname, out thisevent)) {
+			thisevent.Invoke();
+		}
+	}
 }

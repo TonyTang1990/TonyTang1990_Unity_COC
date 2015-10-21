@@ -31,7 +31,7 @@ namespace Completed
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
 			
-			//Get the current food point total stored in GameManager.instance between levels.
+			//Get the current food point total stored in .instance between levels.
 			food = GameManager.instance.playerFoodPoints;
 			
 			//Set the foodText to reflect the current player food total.
@@ -45,7 +45,7 @@ namespace Completed
 		//This function is called when the behaviour becomes disabled or inactive.
 		private void OnDisable ()
 		{
-			//When Player object is disabled, store the current local food total in the GameManager so it can be re-loaded in next level.
+			//When Player object is disabled, store the current local food total in the  so it can be re-loaded in next level.
 			GameManager.instance.playerFoodPoints = food;
 		}
 		
@@ -149,7 +149,7 @@ namespace Completed
 			//Since the player has moved and lost food points, check if the game has ended.
 			CheckIfGameOver ();
 			
-			//Set the playersTurn boolean of GameManager to false now that players turn is over.
+			//Set the playersTurn boolean of  to false now that players turn is over.
 			GameManager.instance.playersTurn = false;
 		}
 		
@@ -254,7 +254,7 @@ namespace Completed
 				//Stop the background music.
 				SoundManager.instance.musicSource.Stop();
 				
-				//Call the GameOver function of GameManager.
+				//Call the GameOver function of .
 				GameManager.instance.GameOver ();
 			}
 		}
