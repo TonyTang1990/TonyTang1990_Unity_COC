@@ -12,7 +12,6 @@ GameObject:
   - 23: {fileID: 2378236}
   - 95: {fileID: 9537364}
   - 54: {fileID: 5477218}
-  - 65: {fileID: 6533466}
   - 114: {fileID: 11487350}
   m_Layer: 0
   m_Name: Drawers
@@ -134,18 +133,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6533466
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116766}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 12.0225849, y: 13.6710062, z: 9.673522}
-  m_Center: {x: 0, y: 6.84238482, z: -1.10166299}
 --- !u!95 &9537364
 Animator:
   serializedVersion: 3

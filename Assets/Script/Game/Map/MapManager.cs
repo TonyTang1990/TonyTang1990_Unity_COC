@@ -110,7 +110,7 @@ public class MapManager : MonoBehaviour {
 		mSoldiersScriptInGame = new List<Soldier>();
 	}
 	
-	void LoadMap()
+	public void LoadMap()
 	{
 		Debug.Log("LoadMap()");
 		if (File.Exists (mMapSavePath)) {
@@ -118,6 +118,8 @@ public class MapManager : MonoBehaviour {
 			FileStream fs = File.Open (mMapSavePath, FileMode.Open);
 			mMap = (Map)bf.Deserialize (fs);
 			fs.Close ();
+
+			MapSetup();
 		} else {
 			mMap = new Map ();
 			SaveMap();
@@ -189,7 +191,7 @@ public class MapManager : MonoBehaviour {
 			mBuildingsInfoInGame.Add(bd.GetComponent<Building>());
 			Debug.Log("bdi.Position" + bdi.Position);
 	    }
-
+		/*
 		Vector3 startposition = mTerrainTilesScript [0, 0].gameObject.transform.position;
 		startposition.y += 0.5f;
 		Vector3 endposition = mTerrainTilesScript [mRows-1, mColumns-1].gameObject.transform.position;
@@ -200,17 +202,13 @@ public class MapManager : MonoBehaviour {
 		endposition.y += 0.5f;
 		VisualUlities.VUInstance.Draw3DLine (endposition);
 		VisualUlities.VUInstance.Draw3DLine (startposition);
-
+		*/
 		//VisualUlities.VUInstance.DestroyAllLines ();
 	}
 
 	// Use this for initialization
 	void Start () {
-		LoadMap ();
-		
-		SaveMap ();
 
-		MapSetup ();
 	}
 
 	// Update is called once per frame

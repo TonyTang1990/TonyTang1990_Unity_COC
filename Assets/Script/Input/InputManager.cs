@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour {
 
 	private float mInputTimer = 0.0f;
 
+	private float mTriggerCount = 0.0f;
+
 	void Awake()
 	{
 		if (mInputInstance == null) {
@@ -68,12 +70,22 @@ public class InputManager : MonoBehaviour {
 				}
 			}
 
-			if (Input.GetKey (KeyCode.F1) && mInputTimer > mValidInputDeltaTime) {
+			if (Input.GetKey (KeyCode.F1)) {
 				Debug.Log ("KeyCode.F1 Pressed");
 				mInputTimer = 0.0f;
-				if (!GameManager.mGameInstance.isBuildingSelected) {
-					GameManager.mGameInstance.setCurrenctSelectedBuilding (0);
-				}
+				//Test eventmanager
+				//mTriggerCount++;
+				EventManager.TriggerEvent("CalculatePath");
+			}
+
+			if (Input.GetKey (KeyCode.R)) {
+				Debug.Log ("KeyCode.R Pressed");
+				mInputTimer = 0.0f;
+				//Test eventmanager
+				if (EventManager.mEMInstance != null) {
+					Debug.Log ("F1Pressed message registerd");
+					EventManager.StartListening("F1Pressed",F1Pressed);
+			   }
 			}
 		}
 		/*
@@ -85,5 +97,10 @@ public class InputManager : MonoBehaviour {
 			//Camera.main.ScreenToWorldPoint(
 		}
 		*/
+	}
+
+	void F1Pressed()
+    {
+		Debug.Log ("F1Pressed callback triggered times: " + mTriggerCount);
 	}
 }

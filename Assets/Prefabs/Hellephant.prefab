@@ -44,6 +44,7 @@ GameObject:
   - 4: {fileID: 409296}
   - 95: {fileID: 9587500}
   - 114: {fileID: 11443200}
+  - 114: {fileID: 11417970}
   m_Layer: 0
   m_Name: Hellephant
   m_TagString: Soldier
@@ -162,6 +163,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db956f93f6cc78b488eab02b9e2ba1a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11417970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    priority: 1
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  traversableTagsCompatibility:
+    tagsChange: -1
+    tagsSet: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &11443200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -173,7 +202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c7dc269c020c54a81a634e9a093fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSS: 0
   mSpeed: 1
   mPreferAttackType: 1
   mAttackInterval: 3
@@ -222,7 +250,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 197974}

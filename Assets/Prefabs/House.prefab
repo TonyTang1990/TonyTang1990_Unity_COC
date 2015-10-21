@@ -45,7 +45,6 @@ GameObject:
   - 23: {fileID: 2388492}
   - 95: {fileID: 9593444}
   - 54: {fileID: 5409198}
-  - 65: {fileID: 6589690}
   - 114: {fileID: 11416148}
   m_Layer: 11
   m_Name: House
@@ -162,18 +161,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6589690
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 6.08707666, y: 10.5699978, z: 5.97981453}
-  m_Center: {x: -4.76837158e-07, y: 5.25663662, z: 0}
 --- !u!95 &9593444
 Animator:
   serializedVersion: 3

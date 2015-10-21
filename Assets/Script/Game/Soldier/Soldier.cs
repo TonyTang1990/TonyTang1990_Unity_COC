@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Pathfinding;
 
 [Serializable]
 public enum SoldierType
@@ -104,6 +105,13 @@ public class Soldier : MonoBehaviour {
 
 	private TextMesh mHPText;
 
+	public Seeker Seeker {
+		get {
+			return mSeeker;
+		}
+	}
+	protected Seeker mSeeker;
+
 	public virtual void Awake()
 	{
 		Debug.Log("Soldier's Position = " + gameObject.transform.position);
@@ -121,6 +129,8 @@ public class Soldier : MonoBehaviour {
 
 		mAnim = GetComponent<Animator>();
 
+		mSeeker = GetComponent<Seeker> ();
+
 		mSAttackState = new SoldierAttackState (this);
 
 		mSMoveState = new SoldierMoveState (this);
@@ -131,6 +141,8 @@ public class Soldier : MonoBehaviour {
 	public void Start()
 	{
 		mSCurrentState = mSMoveState;
+
+		EventManager.StartListening("CalculatePath",CalculatePath);
 	}
 
 	public virtual void Update ()
@@ -191,6 +203,19 @@ public class Soldier : MonoBehaviour {
 			GameObject bl = MonoBehaviour.Instantiate (mBullet, transform.position, Quaternion.identity) as GameObject;
 			bl.GetComponent<Bullet> ().AttackTarget = mAttackingObject;
 		}
+	}
+	
+	public void CalculatePath()
+	{
+		if(mAttackingObject != null)
+		{
+			mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
+		}
+	}
+	
+	private void OnPathComplete(Path path)
+	{
+		
 	}
 }
 

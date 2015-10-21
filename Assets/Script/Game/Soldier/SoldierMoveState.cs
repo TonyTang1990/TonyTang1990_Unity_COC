@@ -14,7 +14,9 @@ public class SoldierMoveState : SoldierState {
 	{
 		if (!mSoldier.IsDead) {
 			mSoldier.MakeDecision ();
-			Move ();
+			//mSoldier.CalculatePath();
+			//GameManager.mGameInstance.Navigation
+			//Move ();
 		} else {
 			ToDeadState();
 		}
@@ -41,24 +43,19 @@ public class SoldierMoveState : SoldierState {
 
 	private void Move()
 	{
-		if (mSoldier.AttackTarget != null && !mSoldier.IsTargetInAttackRange()) {
+		if (mSoldier.AttackTarget != null) {
 			Vector3 movedirection = mSoldier.AttackTarget.mBI.Position - mSoldier.transform.position;
 			movedirection.Normalize();
 			mSoldier.transform.LookAt (mSoldier.AttackTarget.mBI.Position);
-			Vector3 newposition = mSoldier.transform.position + movedirection * mSoldier.mSpeed * Time.deltaTime;
-			//mSoldier.DistanceToTarget = Vector3.Distance(mSoldier.transform.position,mSoldier.AttackTarget.mBI.Position);
-			//if (mSoldier.DistanceToTarget > mSoldier.mAttackDistance) {
+			if(!mSoldier.IsTargetInAttackRange())
+			{
+				Vector3 newposition = mSoldier.transform.position + movedirection * mSoldier.mSpeed * Time.deltaTime;
 				mSoldier.transform.position = newposition;
-			//} else {
-				//if( mSoldier.Anim != null )
-				//{
-					//mSoldier.AttackTimer = mSoldier.mAttackInterval;				
-				//}
-			//}
-		}
-		else
-		{
-			ToAttackState();
+			}
+			else
+			{
+				ToAttackState();
+			}
 		}
 	}
 }

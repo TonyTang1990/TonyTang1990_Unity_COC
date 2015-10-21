@@ -54,6 +54,15 @@ public class GameManager : MonoBehaviour {
 	}
 	private Vector2 mCurrentOccupiedIndex;
 
+	private GameObject mNavigationObject;
+
+	public AstarPath Navigation {
+		get {
+			return mNavigation;
+		}
+	}
+	private AstarPath mNavigation;
+
 	void Awake()
 	{
 		if (mGameInstance == null) {
@@ -61,11 +70,21 @@ public class GameManager : MonoBehaviour {
 		} else if (mGameInstance != this) {
 			Destroy(gameObject);
 		}
+
+		mNavigationObject = GameObject.FindGameObjectWithTag ("Navigation");
+
+		mNavigation = mNavigationObject.GetComponent<AstarPath> ();
 	}
 
 	// Use this for initialization
 	void Start () {
+		MapManager.mMapInstance.LoadMap ();
+		
+		MapManager.mMapInstance.SaveMap ();
 
+		if (mNavigation != null) {
+			mNavigation.Scan ();
+		}
 	}
 	
 	// Update is called once per frame
