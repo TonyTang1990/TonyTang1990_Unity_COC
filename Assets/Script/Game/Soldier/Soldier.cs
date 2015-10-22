@@ -252,7 +252,7 @@ public class Soldier : MonoBehaviour {
 			//Direction to the next waypoint
 			Vector3 dir = (mAStarPath.vectorPath [mCurrentWayPoint] - transform.position).normalized;
 
-			transform.LookAt (mAttackingObject.mBI.Position);
+			transform.LookAt (mAStarPath.vectorPath [mCurrentWayPoint]);
 
 			/*
 		if (mController != null) {
@@ -279,12 +279,21 @@ public class Soldier : MonoBehaviour {
 			mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
 		}
 	}
+
+	//private IEnumerator WaitForPathCalculation()
+	//{
+		//mAStarPath = mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
+		//yield return StartCoroutine (mAStarPath.WaitForPath ());
+	//}
 	
 	private void OnPathComplete(Path path)
 	{
 		if (!path.error) {
 			mAStarPath = path;
-
+			if(mAStarPath==null)
+			{
+				Debug.Log ("mAStarPath == null");
+			}
 			mCurrentWayPoint = 0;
 		} else {
 			Debug.Log ("Oh noes, the target was not reachable: "+path.errorLog);

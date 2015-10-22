@@ -31,6 +31,8 @@ public class SoldierMoveState : SoldierState {
 
 	public void ToAttackState()
 	{
+		mSoldier.transform.LookAt (mSoldier.AttackTarget.transform);
+
 		mSoldier.AttackTimer = mSoldier.mAttackInterval;
 		mSoldier.Anim.SetBool("SoldierMoving",false);
 		mSoldier.mSCurrentState = mSoldier.mSAttackState as SoldierState;

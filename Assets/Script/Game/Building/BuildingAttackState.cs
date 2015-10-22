@@ -11,7 +11,7 @@ public class BuildingAttackState : BuildingState {
 
 	public void UpdateState()
 	{
-		if (mBuilding.IsTargetAvalibleToAttack ()) {
+		if (mBuilding.IsTargetAvalibleToAttack () && !mBuilding.mBI.IsDestroyed) {
 			Attack ();
 		} else {
 			ToIdleState();
