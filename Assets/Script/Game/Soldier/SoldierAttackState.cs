@@ -14,9 +14,9 @@ public class SoldierAttackState : SoldierState {
 	{
 		if (!mSoldier.IsDead) {
 			mSoldier.MakeDecision ();
-			if(mSoldier.IsTargetInAttackRange())
+			if(mSoldier.AttackTarget != null && !mSoldier.AttackTarget.mBI.IsDestroyed && mSoldier.IsTargetInAttackRange())
 			{	
-				Attack ();
+				mSoldier.Attack();
 			}
 			else
 			{
@@ -48,18 +48,5 @@ public class SoldierAttackState : SoldierState {
 	{
 		mSoldier.Anim.SetBool("SoldierDead",true);
 		mSoldier.mSCurrentState = mSoldier.mSDeadState;
-	}
-
-	private void Attack()
-	{
-		if (mSoldier.AttackTarget != null && !mSoldier.AttackTarget.mBI.IsDestroyed) {
-			mSoldier.Attack();
-			/*
-			GameObject bl = MonoBehaviour.Instantiate (mSoldier.mBullet, mSoldier.transform.position, Quaternion.identity) as GameObject;
-			bl.GetComponent<Bullet> ().AttackTarget = mSoldier.AttackTarget;
-			*/
-		} else {
-			ToMoveState();
-		}
 	}
 }

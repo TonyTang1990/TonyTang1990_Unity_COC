@@ -118,12 +118,11 @@ public class MapManager : MonoBehaviour {
 			FileStream fs = File.Open (mMapSavePath, FileMode.Open);
 			mMap = (Map)bf.Deserialize (fs);
 			fs.Close ();
-
-			MapSetup();
 		} else {
 			mMap = new Map ();
 			SaveMap();
 		}
+		MapSetup();	
 	}
 	
 	public void SaveMap()

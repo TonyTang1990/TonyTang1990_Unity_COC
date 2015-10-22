@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour {
 		{
 			mLifeTime = value;
 			Invoke ("DestroyItself",mLifeTime);
-			Debug.Log("Bullet LifeTime = " + mLifeTime);
+			//Debug.Log("Bullet LifeTime = " + mLifeTime);
 		}
 	}
 	private float mLifeTime;
@@ -44,15 +44,15 @@ public class Bullet : MonoBehaviour {
 	{
 		if(mAttackSoldier != null)
 		{
-			Debug.Log("mAttackSoldier.transform.position = " + mAttackSoldier.transform.position);
-			Debug.Log("transform.position = " + transform.position);
+			//Debug.Log("mAttackSoldier.transform.position = " + mAttackSoldier.transform.position);
+			//Debug.Log("transform.position = " + transform.position);
 
 			float distance = Vector3.Distance(mAttackSoldier.transform.position, transform.position);
 			float arrivetime = distance / mBSpeed;
 			LifeTime = arrivetime;
 			mMoveDirection = mAttackSoldier.transform.position - transform.position;
 			mMoveDirection.Normalize();
-			Debug.Log("mMoveDirection = " + mMoveDirection);
+			//Debug.Log("mMoveDirection = " + mMoveDirection);
 		}
 		if(mAttackTarget != null)
 		{
@@ -61,7 +61,7 @@ public class Bullet : MonoBehaviour {
 			LifeTime = arrivedtime;
 			mMoveDirection = mAttackTarget.mBI.Position - transform.position;
 			mMoveDirection.Normalize();
-			Debug.Log("mMoveDirection = " + mMoveDirection);
+			//Debug.Log("mMoveDirection = " + mMoveDirection);
 		}
 	}
 
@@ -85,7 +85,6 @@ public class Bullet : MonoBehaviour {
 		if (mAttackSoldier != null && !mAttackSoldier.IsDead) {
 			mAttackSoldier.TakeDamage(mDamage);
 		}
-		Debug.Log ("Bullet::OnDestroy()");
-		
+		//Debug.Log ("Bullet::OnDestroy()");
 	}
 }

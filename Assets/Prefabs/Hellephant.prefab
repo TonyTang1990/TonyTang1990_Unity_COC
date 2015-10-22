@@ -208,6 +208,7 @@ MonoBehaviour:
   mAttackDistance: 2
   mSHP: 50
   mBullet: {fileID: 197372, guid: 7ad623aeba4c33941a2f0ef6c386cc29, type: 2}
+  mNextWaypointDistance: .200000003
 --- !u!137 &13782396
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

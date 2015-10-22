@@ -76,6 +76,13 @@ public class Soldier : MonoBehaviour {
 	}
 	protected Building mAttackingObject;
 
+	public Building OldAttackObject {
+		get {
+			return mOldAttackingObject;
+		}
+	}
+	protected Building mOldAttackingObject;
+
 	public Animator Anim {
 		get {
 			return mAnim;
@@ -112,6 +119,24 @@ public class Soldier : MonoBehaviour {
 	}
 	protected Seeker mSeeker;
 
+	public Path AStarPath {
+		get {
+			return mAStarPath;
+		}
+	}
+	protected Path mAStarPath;
+
+	public int CurrentWayPoint {
+		get {
+			return mCurrentWayPoint;
+		}
+	}
+	protected int mCurrentWayPoint = 0;
+
+	public float mNextWaypointDistance = 0.2f;
+
+	private CharacterController mController;
+
 	public virtual void Awake()
 	{
 		Debug.Log("Soldier's Position = " + gameObject.transform.position);
@@ -130,6 +155,8 @@ public class Soldier : MonoBehaviour {
 		mAnim = GetComponent<Animator>();
 
 		mSeeker = GetComponent<Seeker> ();
+
+		mController = GetComponent<CharacterController> ();
 
 		mSAttackState = new SoldierAttackState (this);
 
@@ -171,13 +198,19 @@ public class Soldier : MonoBehaviour {
 
 	public virtual void DestroyItself()
 	{
+		EventManager.StopListening("CalculatePath",CalculatePath);
 		Destroy (gameObject);
 	}
 	
 	public void MakeDecision()
 	{
 		if (gameObject != null && !mIsDead) {
+			mOldAttackingObject = mAttackingObject;
 			mAttackingObject= GameManager.mGameInstance.ObtainAttackObject (this);
+			if(mAttackingObject != mOldAttackingObject)
+			{
+				EventManager.TriggerEvent("CalculatePath");
+			}
 		}
 	}
 	
@@ -204,18 +237,58 @@ public class Soldier : MonoBehaviour {
 			bl.GetComponent<Bullet> ().AttackTarget = mAttackingObject;
 		}
 	}
+
+	public void Move()
+	{
+		if (mAttackingObject != null) {
+			if (mAStarPath == null) {
+				//We have no path to move after yet
+				return;
+			}
+			if (mCurrentWayPoint >= mAStarPath.vectorPath.Count) {
+				Debug.Log ("End Of Path Reached");
+				return;
+			}
+			//Direction to the next waypoint
+			Vector3 dir = (mAStarPath.vectorPath [mCurrentWayPoint] - transform.position).normalized;
+
+			transform.LookAt (mAttackingObject.mBI.Position);
+
+			/*
+		if (mController != null) {
+			mController.SimpleMove (dir);
+		}
+		*/
+			Vector3 newposition = transform.position + dir * mSpeed * Time.deltaTime;
+			transform.position = newposition;
+
+			//Check if we are close enough to the next waypoint
+			//If we are, proceed to follow the next waypoint
+			if (Vector3.Distance (transform.position, mAStarPath.vectorPath [mCurrentWayPoint]) < mNextWaypointDistance) {
+				mCurrentWayPoint++;
+				return;
+			}
+		}
+	}
 	
 	public void CalculatePath()
 	{
 		if(mAttackingObject != null)
 		{
+			Debug.Log ("CalculatePath() called");
 			mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
 		}
 	}
 	
 	private void OnPathComplete(Path path)
 	{
-		
+		if (!path.error) {
+			mAStarPath = path;
+
+			mCurrentWayPoint = 0;
+		} else {
+			Debug.Log ("Oh noes, the target was not reachable: "+path.errorLog);
+		}
 	}
 }
 
