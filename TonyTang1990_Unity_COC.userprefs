@@ -1,21 +1,21 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Game\Soldier\Soldier.cs">
     <Files>
-      <File FileName="Assets\Script\Game\Soldier\Soldier.cs" Line="279" Column="95" />
-      <File FileName="Assets\Script\Game\Event\EventManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Input\InputManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Game\Soldier\Soldier.cs" Line="285" Column="3" />
+      <File FileName="Assets\Script\Game\Event\EventManager.cs" Line="44" Column="12" />
+      <File FileName="Assets\Script\Input\InputManager.cs" Line="81" Column="4" />
+      <File FileName="Assets\Script\Game\GameManager.cs" Line="168" Column="42" />
       <File FileName="Assets\Script\Game\Map\MapManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierAttackState.cs" Line="23" Column="19" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierMoveState.cs" Line="26" Column="5" />
+      <File FileName="Assets\Script\Game\Soldier\SoldierAttackState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Game\Soldier\SoldierMoveState.cs" Line="1" Column="1" />
       <File FileName="..\..\AStarProjectTest\AStarProjectTest\Assets\Script\AIPather.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\UI\FPSDisplay.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Game\Camera\CameraController.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Game\Soldier\Hellephant.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Game\Soldier\SoldierState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Building\Building.cs" Line="130" Column="7" />
-      <File FileName="Assets\Script\Game\Building\BuildingAttackState.cs" Line="17" Column="18" />
+      <File FileName="Assets\Script\Game\Building\Building.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Game\Building\BuildingAttackState.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

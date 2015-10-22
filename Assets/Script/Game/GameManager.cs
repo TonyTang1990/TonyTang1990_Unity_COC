@@ -162,14 +162,25 @@ public class GameManager : MonoBehaviour {
 		mIsSoldierSelected = true;
 		mIsBuildingSelected = false;
 	}
-	
+
+	public void DeselectChoosingStaff()
+	{
+		if (mCurrentSelectedBuilding != null) {
+			Destroy(mCurrentSelectedBuilding);
+		}
+
+		mCurrentSelectedSoldierType = SoldierType.E_DEFAULT;
+		mIsSoldierSelected = false;
+		mIsBuildingSelected = false;
+	}
+
 	public void DeploySoldier(Vector3 hitpoint)
 	{
 		GameObject go = SoldierFactory.SpawnSoldier(mCurrentSelectedSoldierType,hitpoint);
 		MapManager.mMapInstance.SoldiersInGame.Add(go);
 		MapManager.mMapInstance.SoldiersScriptInGame.Add(go.GetComponent<Soldier>());
 	}
-	
+
 	public Building ObtainAttackObject(Soldier sod)
 	{
 		Building targetbuilding = null;

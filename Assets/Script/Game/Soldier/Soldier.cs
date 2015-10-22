@@ -7,7 +7,8 @@ using Pathfinding;
 public enum SoldierType
 {
 	E_HELLEPHANT = 0,
-	E_ZOMBUNNY = 1
+	E_ZOMBUNNY = 1,
+	E_DEFAULT
 }
 
 /*
@@ -168,8 +169,6 @@ public class Soldier : MonoBehaviour {
 	public void Start()
 	{
 		mSCurrentState = mSMoveState;
-
-		EventManager.StartListening("CalculatePath",CalculatePath);
 	}
 
 	public virtual void Update ()
@@ -198,7 +197,6 @@ public class Soldier : MonoBehaviour {
 
 	public virtual void DestroyItself()
 	{
-		EventManager.StopListening("CalculatePath",CalculatePath);
 		Destroy (gameObject);
 	}
 	
@@ -209,7 +207,7 @@ public class Soldier : MonoBehaviour {
 			mAttackingObject= GameManager.mGameInstance.ObtainAttackObject (this);
 			if(mAttackingObject != mOldAttackingObject)
 			{
-				EventManager.TriggerEvent("CalculatePath");
+				CalculatePath();
 			}
 		}
 	}
@@ -276,20 +274,20 @@ public class Soldier : MonoBehaviour {
 		if(mAttackingObject != null)
 		{
 			Debug.Log ("CalculatePath() called");
-			mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
+			StartCoroutine(WaitForPathCalculation());
 		}
 	}
 
-	//private IEnumerator WaitForPathCalculation()
-	//{
-		//mAStarPath = mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
-		//yield return StartCoroutine (mAStarPath.WaitForPath ());
-	//}
+	private IEnumerator WaitForPathCalculation()
+	{
+		mAStarPath = mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
+		yield return StartCoroutine (mAStarPath.WaitForPath ());
+	}
 	
 	private void OnPathComplete(Path path)
 	{
 		if (!path.error) {
-			mAStarPath = path;
+			//mAStarPath = path;
 			if(mAStarPath==null)
 			{
 				Debug.Log ("mAStarPath == null");
