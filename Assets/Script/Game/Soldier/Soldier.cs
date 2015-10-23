@@ -17,7 +17,8 @@ public enum SoldierState
 {
 	E_IDLE = 0,
 	E_MOVING = 1,
-	E_ATTACKING
+	E_ATTACKING = 2,
+	E_DEAD
 }
 */
 [Serializable]
