@@ -64,6 +64,24 @@ public class MapManager : MonoBehaviour {
 	}
 	private List<Building> mBuildingsInfoInGame;
 
+	public List<Building> NullWallBuildingsInfoInGame {
+		get {
+			return mNullWallBuildingsInfoInGame;
+		}
+	}
+	private List<Building> mNullWallBuildingsInfoInGame;
+
+
+	public int NullWallBuildingNumber {
+		get {
+			return mNullWallBuildingNumber;
+		}
+		set {
+			mNullWallBuildingNumber = value;
+		}
+	}
+	private int mNullWallBuildingNumber = 0;
+
 	public List<GameObject> SoldiersInGame {
 		get {
 			return mSoldiersInGame;
@@ -106,6 +124,7 @@ public class MapManager : MonoBehaviour {
 
 		mBuildingsInGame = new List<GameObject>();
 		mBuildingsInfoInGame = new List<Building> ();
+		mNullWallBuildingsInfoInGame = new List<Building> ();
 		mSoldiersInGame = new List<GameObject> ();
 		mSoldiersScriptInGame = new List<Soldier>();
 	}
@@ -188,8 +207,15 @@ public class MapManager : MonoBehaviour {
 			bd.GetComponent<Building>().mBI.Position = position;
 			mBuildingsInGame.Add(bd);
 			mBuildingsInfoInGame.Add(bd.GetComponent<Building>());
+			if(bdi.getBuildingType() != BuildingType.E_WALL)
+			{
+				mNullWallBuildingsInfoInGame.Add(bd.GetComponent<Building>());
+				mNullWallBuildingNumber++;
+			}
+			//GameManager.mGameInstance.BuildingDictionaryInGame.Add(bd.
 			Debug.Log("bdi.Position" + bdi.Position);
 	    }
+		Debug.Log ("mNullWallBuildingsInfoInGame.Count = " + mNullWallBuildingsInfoInGame.Count);
 		/*
 		Vector3 startposition = mTerrainTilesScript [0, 0].gameObject.transform.position;
 		startposition.y += 0.5f;

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using Pathfinding;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -64,6 +65,24 @@ public class GameManager : MonoBehaviour {
 	}
 	private AstarPath mNavigation;
 
+	public GameObject mAttackableObject;
+	/*
+	public List<Vector3> BuildingPositionInGame
+	{
+		get
+		{
+			return mBuildingPositionInGame;
+		}
+	}
+	private List<Vector3> mBuildingPositionInGame;
+
+	public Dictionary<Vector3,Building> BuildingDictionaryInGame {
+		get {
+			return mBuildingDictionaryInGame;
+		}
+	}
+	private Dictionary<Vector3,Building> mBuildingDictionaryInGame;
+	*/
 	void Awake()
 	{
 		if (mGameInstance == null) {
@@ -142,7 +161,13 @@ public class GameManager : MonoBehaviour {
 			MapManager.mMapInstance.BuildingsInGame.Add(mCurrentSelectedBuilding);
 			
 			MapManager.mMapInstance.BuildingsInfoInGame.Add(mCurrentSelectedBuilding.GetComponent<Building>());
-			
+
+			if(mCurrentSelectedBuilding.GetComponent<Building>().mBI.getBuildingType() != BuildingType.E_WALL)
+			{
+				MapManager.mMapInstance.NullWallBuildingsInfoInGame.Add(mCurrentSelectedBuilding.GetComponent<Building>());
+				MapManager.mMapInstance.NullWallBuildingNumber++;
+			}
+
 			mCurrentSelectedBuilding = null;
 			
 			mIsBuildingSelected = false;
@@ -194,6 +219,8 @@ public class GameManager : MonoBehaviour {
 			}
 			else
 			{
+				//sod.AttackTarget = bd;
+				//sod.CalculatePath();
 				currentdistance = Vector3.Distance(bd.mBI.Position, sod.gameObject.transform.position);
 				if( currentdistance < shortestdistance )
 				{
@@ -202,6 +229,44 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
+		if(targetbuilding != null)
+		{
+			Debug.Log("targetbuilding.position = " + targetbuilding.transform.position);
+
+			sod.NearestTargetDistance = shortestdistance;
+
+			for(int i = 0; i < sod.AttackablePostions.Length; i++)
+			{
+				sod.AttackablePostions[i] = targetbuilding.mBI.Position;
+			}
+
+			sod.AttackablePostions[0].x += sod.mAttackDistance;
+			sod.AttackablePostions[0].z -= sod.mAttackDistance;
+
+			sod.AttackablePostions[1].x += sod.mAttackDistance;
+
+			sod.AttackablePostions[2].x += sod.mAttackDistance;
+			sod.AttackablePostions[2].z += sod.mAttackDistance;
+
+			sod.AttackablePostions[3].z -= sod.mAttackDistance;
+
+			sod.AttackablePostions[4].z += sod.mAttackDistance;
+
+			sod.AttackablePostions[5].x -= sod.mAttackDistance;
+			sod.AttackablePostions[5].z -= sod.mAttackDistance;
+
+			sod.AttackablePostions[6].x -= sod.mAttackDistance;
+
+			sod.AttackablePostions[7].x -= sod.mAttackDistance;
+			sod.AttackablePostions[7].z += sod.mAttackDistance;
+		}
+		/*
+		for(int i = 0; i < sod.AttackablePostions.Length; i++)
+		{
+			Debug.Log (string.Format("sod.AttackablePositions[{0}] = {1}",i,sod.AttackablePostions[i]));
+			Instantiate (mAttackableObject, sod.AttackablePostions[i], Quaternion.identity);
+		}
+		*/
 		return targetbuilding;
 	}
 	

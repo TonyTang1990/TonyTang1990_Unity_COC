@@ -88,6 +88,16 @@ public class InputManager : MonoBehaviour {
 					EventManager.StartListening("F1Pressed",F1Pressed);
 			   }
 			}
+
+			if (Input.GetKey (KeyCode.C)) {
+				Debug.Log ("KeyCode.C Pressed");
+				mInputTimer = 0.0f;
+				//Test eventmanager
+				if (EventManager.mEMInstance != null) {
+					GameManager.mGameInstance.Navigation.Scan();
+				}
+			}
+
 		}
 		/*
 		if (Input.touchCount == 1 && Input.GetTouch (0).phase == TouchPhase.Ended) {

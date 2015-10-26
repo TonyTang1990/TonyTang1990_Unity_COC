@@ -85,6 +85,28 @@ public class Soldier : MonoBehaviour {
 	}
 	protected Building mOldAttackingObject;
 
+	public Building ShortestPathTarget
+	{
+		get
+		{
+			return mShortestPathObject;
+		}
+		set
+		{
+			mShortestPathObject = value;
+		}
+	}
+	private Building mShortestPathObject;
+
+	public Vector3[] AttackablePostions
+	{
+		get
+		{
+			return mAttackablePositions;
+		}
+	}
+	private Vector3[] mAttackablePositions; 
+
 	public Animator Anim {
 		get {
 			return mAnim;
@@ -128,6 +150,40 @@ public class Soldier : MonoBehaviour {
 	}
 	protected Path mAStarPath;
 
+	public float ShortestTargetPathLength {
+		get {
+			return mShortestTargetPathLength;
+		}
+		set
+		{
+			mShortestTargetPathLength = value;
+		}
+	}
+	private float mShortestTargetPathLength;
+
+	public float NearestTargetPathLength {
+		get {
+			return mNearestTargetPathLength;
+		}
+		set
+		{
+			mNearestTargetPathLength = value;
+		}
+	}
+	private float mNearestTargetPathLength = Mathf.Infinity;
+
+	public Path ShortestPath {
+		get {
+			return mShortestPath;
+		}
+	}
+	protected Path mShortestPath;
+
+	private Path[] mLastPaths;
+
+	/* Number of paths completed so far */
+	private int mNumCompleted = 0;
+
 	public int CurrentWayPoint {
 		get {
 			return mCurrentWayPoint;
@@ -137,7 +193,30 @@ public class Soldier : MonoBehaviour {
 
 	public float mNextWaypointDistance = 0.2f;
 
-	private CharacterController mController;
+	//private CharacterController mController;
+
+	public float NearestTargetDistance {
+		get {
+			return mNearestTargetDistance;
+		}
+		set {
+			mNearestTargetDistance = value;
+		}
+	}
+	private float mNearestTargetDistance = 0.0f;
+
+	public float NearestReachableTargetDIstance
+	{
+		get
+		{
+			return mNearestReachableTargetDistance;
+		}
+		set
+		{
+			mNearestReachableTargetDistance = value;
+		}
+	}
+	private float mNearestReachableTargetDistance = 0.0f;
 
 	public virtual void Awake()
 	{
@@ -158,13 +237,15 @@ public class Soldier : MonoBehaviour {
 
 		mSeeker = GetComponent<Seeker> ();
 
-		mController = GetComponent<CharacterController> ();
+		//mController = GetComponent<CharacterController> ();
 
 		mSAttackState = new SoldierAttackState (this);
 
 		mSMoveState = new SoldierMoveState (this);
 
 		mSDeadState = new SoldierDeadState (this);
+
+		mAttackablePositions = new Vector3[8];
 	}
 
 	public void Start()
@@ -200,16 +281,86 @@ public class Soldier : MonoBehaviour {
 	{
 		Destroy (gameObject);
 	}
-	
+
+	private bool ShouldChangeAttackTarget()
+	{
+		if (mAttackingObject != null)
+		{
+			if (!mAttackingObject.mBI.IsDestroyed) {
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
 	public void MakeDecision()
 	{
 		if (gameObject != null && !mIsDead) {
 			mOldAttackingObject = mAttackingObject;
-			mAttackingObject= GameManager.mGameInstance.ObtainAttackObject (this);
-			if(mAttackingObject != mOldAttackingObject)
+			if(ShouldChangeAttackTarget())
 			{
-				CalculatePath();
+				CalculateAllPathsInfo();
+				mAttackingObject= GameManager.mGameInstance.ObtainAttackObject (this);
+				if(mAttackingObject != mOldAttackingObject && mAttackingObject!=null)
+				{
+					CalculatePath();
+				}
 			}
+		}
+	}
+
+	private void CalculateAllPathsInfo()
+	{
+		//If any paths are currently being calculated, cancel them to avoid wasting processing power
+		if (mLastPaths != null)
+			//mLastPaths = null;
+			for (int i=0; i<mLastPaths.Length; i++) {
+				mLastPaths [i].Error ();
+			}
+		
+		//Create a new lastPaths array if necessary (can reuse the old one?)
+		int validbuildingnumbers = 0; //= MapManager.mMapInstance.NullWallBuildingNumber;
+		int nullwallbuildingnumbers = MapManager.mMapInstance.NullWallBuildingNumber;
+		foreach (Building nwbd in MapManager.mMapInstance.NullWallBuildingsInfoInGame) {
+			if(nwbd.mBI.IsDestroyed != true)
+			{
+				validbuildingnumbers++;
+			}
+		}
+		if (mLastPaths == null || mLastPaths.Length != validbuildingnumbers) {
+			mLastPaths = new Path[validbuildingnumbers];
+		}
+
+		Building bd = null;
+		int pathindex = 0;
+		for(int i = 0; i < nullwallbuildingnumbers; i++)
+		{
+		//foreach (Building bd in MapManager.mMapInstance.BuildingsInfoInGame) {
+			//bd = MapManager.mMapInstance.BuildingsInfoInGame[i];
+			/*
+			if( bd.mBI.IsDestroyed || bd.mBI.mBT == BuildingType.E_WALL)
+			{
+				//Debug.Log("IsDestroyed = " + bd.mBI.IsDestroyed);
+				continue;
+			}
+			else
+			{
+			*/
+				Debug.Log ("CalculateAllPathsInfo() called");
+				bd = MapManager.mMapInstance.NullWallBuildingsInfoInGame[i];
+				if(bd.mBI.IsDestroyed!=true)
+				{
+					ABPath p = ABPath.Construct (transform.position, bd.transform.position, OnPathInfoComplete);
+					mLastPaths[pathindex] = p;
+					AstarPath.StartPath (p);
+					pathindex++;
+				}
+			//}
 		}
 	}
 	
@@ -283,20 +434,77 @@ public class Soldier : MonoBehaviour {
 	{
 		mAStarPath = mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
 		yield return StartCoroutine (mAStarPath.WaitForPath ());
+		//float temppathlength = 0.0f;
+		mNearestTargetPathLength = mAStarPath.GetTotalLength ();
+		Debug.Log ("mNearestTargetPathLength = " + mNearestTargetPathLength);
+		//mAStarPath.Claim (this);
 	}
 	
 	private void OnPathComplete(Path path)
 	{
 		if (!path.error) {
 			//mAStarPath = path;
-			if(mAStarPath==null)
-			{
-				Debug.Log ("mAStarPath == null");
-			}
+			//if(mAStarPath==null)
+			//{
+				//Debug.Log ("mAStarPath == null");
+			//}
 			mCurrentWayPoint = 0;
 		} else {
 			Debug.Log ("Oh noes, the target was not reachable: "+path.errorLog);
+			mAStarPath = null;
 		}
+	}
+
+	private void OnPathInfoComplete(Path p)
+	{
+		if (!p.error) {
+			/*float temppathlength = p.GetTotalLength ();
+			if (temppathlength < mShortestTargetPathLength) {
+				mShortestTargetPathLength = temppathlength;
+				//mShortestPathObject = bd;
+				Debug.Log ("mShortestTargetPathLength = " + mShortestTargetPathLength);
+			}
+			mCurrentWayPoint = 0;
+			*/
+			//Make sure this path is not an old one
+			for (int i=0;i<mLastPaths.Length;i++) {
+				if (mLastPaths[i] == p) {
+					mNumCompleted++;
+					
+					if (mNumCompleted >= mLastPaths.Length) {
+						CompleteSearchClosest ();
+					}
+					return;
+				}
+			}
+		} else {
+			Debug.Log ("Oh noes, the target was not reachable: "+p.errorLog);
+			mShortestPath = null;
+		}
+	}
+
+	/* Called when all paths have completed calculation */
+	public void CompleteSearchClosest () {
+		
+		//Find the shortest path
+		Path shortest = null;
+		float shortestLength = float.PositiveInfinity;
+		
+		//Loop through the paths
+		for (int i=0;i<mLastPaths.Length;i++) {
+			//Get the total length of the path, will return infinity if the path had an error
+			float length = mLastPaths[i].GetTotalLength();
+			
+			Debug.Log ("length = "+ length);
+
+			if (shortest == null || length < mShortestTargetPathLength) {
+				shortest = mLastPaths[i];
+				mShortestTargetPathLength = length;
+				mShortestPathObject = MapManager.mMapInstance.BuildingsInfoInGame[i];				
+			}
+		}
+		Debug.Log ("mShortestTargetPathLength = "+ mShortestTargetPathLength);
+		mShortestPath = shortest;
 	}
 }
 
