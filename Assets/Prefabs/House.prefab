@@ -44,9 +44,9 @@ GameObject:
   - 33: {fileID: 3374548}
   - 23: {fileID: 2388492}
   - 95: {fileID: 9593444}
-  - 54: {fileID: 5409198}
   - 114: {fileID: 11416148}
   - 65: {fileID: 6564260}
+  - 114: {fileID: 11449256}
   m_Layer: 11
   m_Name: House
   m_TagString: Building
@@ -147,21 +147,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 130422}
   m_Mesh: {fileID: 4300000, guid: eec0a941ebb666b458f6523bd925c87d, type: 3}
---- !u!54 &5409198
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &6564260
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -172,7 +157,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 12, z: 3}
+  m_Size: {x: 6, y: 11, z: 6}
   m_Center: {x: -4.76837158e-07, y: 5.25663662, z: 0}
 --- !u!95 &9593444
 Animator:
@@ -244,6 +229,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db956f93f6cc78b488eab02b9e2ba1a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11449256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateError: .200000003
+  checkTime: .200000003
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

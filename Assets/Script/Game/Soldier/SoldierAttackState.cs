@@ -14,13 +14,20 @@ public class SoldierAttackState : SoldierState {
 	{
 		if (!mSoldier.IsDead) {
 			mSoldier.MakeDecision ();
-			if(mSoldier.AttackTarget != null && !mSoldier.AttackTarget.mBI.IsDestroyed && mSoldier.IsTargetInAttackRange())
-			{	
-				mSoldier.Attack();
+			if(mSoldier.AttackTarget != null)
+			{
+				if(!mSoldier.AttackTarget.mBI.IsDestroyed && mSoldier.IsTargetInAttackRange())
+				{	
+					mSoldier.Attack();
+				}
+				else
+				{
+					ToMoveState();
+				}
 			}
 			else
 			{
-				ToMoveState();
+				ToDeadState();
 			}
 			/*
 			mSoldier.AttackTimer += Time.deltaTime;

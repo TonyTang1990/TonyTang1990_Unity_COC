@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11471946}
   - 114: {fileID: 11470588}
   - 114: {fileID: 11455834}
+  - 136: {fileID: 13622380}
   m_Layer: 0
   m_Name: Zombunny
   m_TagString: Soldier
@@ -231,6 +232,19 @@ MonoBehaviour:
   mSHP: 10
   mBullet: {fileID: 197372, guid: 7ad623aeba4c33941a2f0ef6c386cc29, type: 2}
   mNextWaypointDistance: .200000003
+--- !u!136 &13622380
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102878}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: .5
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: .699999988, z: 0}
 --- !u!137 &13791692
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour {
 					//tempselectposition.y += 0.5f;
 					int occupiedrow = mCurrentSelectedBuilding.GetComponent<Building>().mBI.getSize().mRow;
 					int occupiedcolumn = mCurrentSelectedBuilding.GetComponent<Building>().mBI.getSize().mColumn;
-					float terrainoffset = MapManager.mMapInstance.mTerrainTiles[0].;
+					float terrainoffset = 0.5f;
 					tempselectposition.x += terrainoffset * (occupiedrow - 1);
 					tempselectposition.z += terrainoffset * (occupiedcolumn - 1);
 					mCurrentSelectedBuilding.transform.position = tempselectposition;

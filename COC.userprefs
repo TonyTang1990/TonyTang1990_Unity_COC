@@ -1,15 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Game\Soldier\Soldier.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Game\Soldier\SoldierAttackState.cs">
     <Files>
-      <File FileName="Assets\Script\Game\Soldier\Soldier.cs" Line="497" Column="4" />
-      <File FileName="Assets\Script\Game\GameManager.cs" Line="169" Column="5" />
+      <File FileName="Assets\Script\Game\Soldier\Soldier.cs" Line="311" Column="22" />
+      <File FileName="Assets\Script\Game\GameManager.cs" Line="128" Column="82" />
       <File FileName="Assets\Script\Game\Event\EventManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Utilities\VisualUlities.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierAttackState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Map\MapManager.cs" Line="232" Column="1" />
+      <File FileName="Assets\Script\Game\Soldier\SoldierAttackState.cs" Line="19" Column="8" />
+      <File FileName="Assets\Script\Game\Map\MapManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Game\Soldier\ZomBunny.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierMoveState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Game\Soldier\SoldierMoveState.cs" Line="33" Column="5" />
       <File FileName="Assets\Script\Game\Soldier\SoldierDeadState.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Game\Soldier\SoldierState.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Game\Soldier\SoldierFactory.cs" Line="1" Column="1" />

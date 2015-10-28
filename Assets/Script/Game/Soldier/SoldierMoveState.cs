@@ -16,13 +16,20 @@ public class SoldierMoveState : SoldierState {
 			mSoldier.MakeDecision ();
 			//mSoldier.CalculatePath();
 			//GameManager.mGameInstance.Navigation
-			if(mSoldier.IsTargetInAttackRange())
+			if(mSoldier.AttackTarget != null)
 			{
-				ToAttackState();
+				if(mSoldier.IsTargetInAttackRange())
+				{
+					ToAttackState();
+				}
+				else
+				{
+					mSoldier.Move ();
+				}
 			}
 			else
 			{
-				mSoldier.Move ();
+				ToDeadState();
 			}
 		} else {
 			ToDeadState();
@@ -45,7 +52,6 @@ public class SoldierMoveState : SoldierState {
 
 	public void ToDeadState()
 	{
-		mSoldier.Anim.SetBool("SoldierMoving",false);
 		mSoldier.Anim.SetBool("SoldierDead",true);
 		mSoldier.mSCurrentState = mSoldier.mSDeadState;
 	}
