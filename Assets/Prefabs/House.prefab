@@ -46,6 +46,7 @@ GameObject:
   - 95: {fileID: 9593444}
   - 54: {fileID: 5409198}
   - 114: {fileID: 11416148}
+  - 65: {fileID: 6564260}
   m_Layer: 11
   m_Name: House
   m_TagString: Building
@@ -84,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 130422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.53999996, y: -13.8400002, z: -4.56400013}
+  m_LocalPosition: {x: 5.15999985, y: -13.8400002, z: -8.47999954}
   m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children:
   - {fileID: 424190}
@@ -161,6 +162,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &6564260
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130422}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 12, z: 3}
+  m_Center: {x: -4.76837158e-07, y: 5.25663662, z: 0}
 --- !u!95 &9593444
 Animator:
   serializedVersion: 3

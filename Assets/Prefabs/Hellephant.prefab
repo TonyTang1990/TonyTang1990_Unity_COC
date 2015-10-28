@@ -46,6 +46,7 @@ GameObject:
   - 114: {fileID: 11443200}
   - 114: {fileID: 11417970}
   - 114: {fileID: 11422952}
+  - 136: {fileID: 13684918}
   m_Layer: 0
   m_Name: Hellephant
   m_TagString: Soldier
@@ -231,6 +232,19 @@ MonoBehaviour:
   mSHP: 50
   mBullet: {fileID: 197372, guid: 7ad623aeba4c33941a2f0ef6c386cc29, type: 2}
   mNextWaypointDistance: .200000003
+--- !u!136 &13684918
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197974}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &13782396
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

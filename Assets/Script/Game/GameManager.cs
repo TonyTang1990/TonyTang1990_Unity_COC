@@ -117,7 +117,12 @@ public class GameManager : MonoBehaviour {
 				{
 					//hit.collider.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0);
 					Vector3 tempselectposition = hit.collider.transform.position;
-					tempselectposition.y += 0.5f;
+					//tempselectposition.y += 0.5f;
+					int occupiedrow = mCurrentSelectedBuilding.GetComponent<Building>().mBI.getSize().mRow;
+					int occupiedcolumn = mCurrentSelectedBuilding.GetComponent<Building>().mBI.getSize().mColumn;
+					float terrainoffset = MapManager.mMapInstance.mTerrainTiles[0].;
+					tempselectposition.x += terrainoffset * (occupiedrow - 1);
+					tempselectposition.z += terrainoffset * (occupiedcolumn - 1);
 					mCurrentSelectedBuilding.transform.position = tempselectposition;
 					mCurrentSelectedBuilding.GetComponent<Building>().mBI.Position = tempselectposition;
 					mCurrentOccupiedIndex = hit.collider.GetComponent<TerrianTile>().getIndex();
