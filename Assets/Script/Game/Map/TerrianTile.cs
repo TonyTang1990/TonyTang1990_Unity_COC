@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TerrianTile : MonoBehaviour {
+public class TerrianTile : MonoBehaviour, GameObjectType {
 
 	private SpriteRenderer mSR;
 
@@ -13,12 +13,28 @@ public class TerrianTile : MonoBehaviour {
 
 	private Vector2 mIndex;
 
+	public ObjectType GameType
+	{
+		get
+		{
+			return mGameType;
+		}
+		set
+		{
+			mGameType = value;
+		}
+	}
+	private ObjectType mGameType;
+
 	void Awake()
 	{
 		mSR = GetComponent<SpriteRenderer> ();
 		mOriginalColor = mSR.color;
 		//mOccuppied = false;
 		mIndex = new Vector2(0,0);
+
+		mGameType = ObjectType.EOT_TERRAIN;
+		Debug.Log ("TerrainTile::Awake() mGameType = " + mGameType);
 	}
 	/*
 	public void setOccupied(bool occupied)

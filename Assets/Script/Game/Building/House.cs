@@ -55,6 +55,10 @@ public class House : Building {
 	
 	private Bullet mHouseBulletScript;
 
+	private GameObject mAttackRangeCollider;
+
+	private BuildingAttackRange mAttackRange;
+
 	public override void Awake()
 	{
 		base.Awake ();
@@ -65,6 +69,10 @@ public class House : Building {
 
 		mBAttackState = new BuildingAttackState (this);
 		mBIdleState = new BuildingIdleState (this);
+
+		mAttackRangeCollider = gameObject.transform.Find ("AttackRangeCollider").gameObject;
+		mAttackRangeCollider.GetComponent<SphereCollider> ().radius = mAttackDistance / gameObject.transform.lossyScale.x;
+		mAttackRange = mAttackRangeCollider.GetComponent<BuildingAttackRange> ();
 	}
 
 	public override void Start()
@@ -89,10 +97,41 @@ public class House : Building {
 		mSpawnPoint = gameObject.transform.Find ("BulletSpawnPoint").gameObject.transform.position;
 	}
 
+	private Soldier ChooseAttackTarget()
+	{
+		mAttackRange.RangeTargetList.RemoveAll(item => item == null);
+		if (mAttackRange.RangeTargetList.Count != 0) {
+			Soldier targetsoldier = null;
+			float shortestdistance = Mathf.Infinity;
+			float currentdistance = 0.0f;
+			foreach (Soldier so in mAttackRange.RangeTargetList) {
+				if( so.IsDead )
+				{
+					//Debug.Log("IsDestroyed = " + bdi.IsDestroyed);
+					continue;
+				}
+				else
+				{
+					currentdistance = Vector3.Distance(so.transform.position, transform.position);
+					if( currentdistance < shortestdistance )
+					{
+						shortestdistance = currentdistance;
+						targetsoldier = so;
+					}
+				}
+			}
+			return targetsoldier;
+		} else {
+			//No target in range
+			return null;
+		}
+	}
+
 	public override bool CanAttack()
 	{
 		if (gameObject != null && !mBI.IsDestroyed && mAttackable) {
-			mAttackingObject = GameManager.mGameInstance.ObtainAttackSoldier (this);
+			//mAttackingObject = GameManager.mGameInstance.ObtainAttackSoldier (this);
+			mAttackingObject = ChooseAttackTarget();
 			if(mAttackingObject!=null)
 			{
 				mDistanceToTarget = Vector3.Distance (transform.position, mAttackingObject.transform.position);

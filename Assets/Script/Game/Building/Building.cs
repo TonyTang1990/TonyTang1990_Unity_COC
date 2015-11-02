@@ -76,7 +76,7 @@ public class BuildingInfo
 }
 
 [Serializable]
-public class Building : MonoBehaviour {
+public class Building : MonoBehaviour, GameObjectType {
 
 	public BuildingInfo mBI;
 	
@@ -92,6 +92,19 @@ public class Building : MonoBehaviour {
 	
 	[HideInInspector] public BuildingIdleState mBIdleState;
 
+	public ObjectType GameType
+	{
+		get
+		{
+			return mGameType;
+		}
+		set
+		{
+			mGameType = value;
+		}
+	}
+	private ObjectType mGameType;
+
 	public virtual void Awake()
 	{
 		Debug.Log ("Building::Awake()");
@@ -100,6 +113,9 @@ public class Building : MonoBehaviour {
 			Debug.Log("mHPText == null");
 		}
 		mHPText.text = "HP: " + mBI.mBHP;
+		
+		mGameType = ObjectType.EOT_BUILDING;
+		Debug.Log ("Building::Awake() mGameType = " + mGameType);
 	}
 
 	public virtual void Start()

@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Drawer : Building {
+	
 	public override void Awake()
 	{
 		base.Awake ();

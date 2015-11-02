@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &112310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 404368}
+  - 114: {fileID: 11481140}
+  - 135: {fileID: 13580028}
+  m_Layer: 2
+  m_Name: AttackRangeCollider
+  m_TagString: AttackRange
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &157734
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +64,7 @@ GameObject:
   - 114: {fileID: 11417970}
   - 114: {fileID: 11422952}
   - 136: {fileID: 13684918}
+  - 54: {fileID: 5454080}
   m_Layer: 0
   m_Name: Hellephant
   m_TagString: Soldier
@@ -54,6 +72,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &404368
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112310}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 409296}
+  m_RootOrder: 2
 --- !u!4 &409296
 Transform:
   m_ObjectHideFlags: 1
@@ -66,6 +96,7 @@ Transform:
   m_Children:
   - {fileID: 456902}
   - {fileID: 467400}
+  - {fileID: 404368}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &456902
@@ -116,6 +147,21 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!54 &5454080
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197974}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!95 &9587500
 Animator:
   serializedVersion: 3
@@ -232,6 +278,30 @@ MonoBehaviour:
   mSHP: 50
   mBullet: {fileID: 197372, guid: 7ad623aeba4c33941a2f0ef6c386cc29, type: 2}
   mNextWaypointDistance: .200000003
+  mDetectionDistance: 10
+--- !u!114 &11481140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b4b5671f8dd6b4f9fff35eaf6b84cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &13580028
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112310}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13684918
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -239,7 +309,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197974}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.20000005
   m_Height: 2

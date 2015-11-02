@@ -1,44 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Game\Soldier\SoldierAttackState.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Game\Soldier\Soldier.cs">
     <Files>
-      <File FileName="Assets\Script\Game\Soldier\Soldier.cs" Line="311" Column="22" />
-      <File FileName="Assets\Script\Game\GameManager.cs" Line="128" Column="82" />
-      <File FileName="Assets\Script\Game\Event\EventManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Utilities\VisualUlities.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierAttackState.cs" Line="19" Column="8" />
-      <File FileName="Assets\Script\Game\Map\MapManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\ZomBunny.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierMoveState.cs" Line="33" Column="5" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierDeadState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\SoldierFactory.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\Hellephant.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Soldier\Bullet.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Building\House.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Building\Building.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Map\Map.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Building\Drawer.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Input\InputManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\UI\DrawerButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\UI\WallButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\UI\HouseButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\UI\HellephantButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\UI\ZomBunnyButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Building\BuildingState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Building\BuildingIdleState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Building\BuildingAttackState.cs" Line="1" Column="1" />
-      <File FileName="Assets\2D_Roguelike\Completed\Scripts\GameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\2D_Roguelike\Completed\Scripts\Loader.cs" Line="1" Column="1" />
-      <File FileName="Assets\2D_Roguelike\Completed\Scripts\Player.cs" Line="1" Column="1" />
-      <File FileName="Assets\2D_Roguelike\Completed\Scripts\Enemy.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Game\General\SoldierDetectRange.cs" Line="18" Column="2" />
+      <File FileName="Assets\Script\Game\Soldier\Soldier.cs" Line="400" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="H:\Study tools\Unity\Unity_Project\COC\COC\Assets\Script\Game\Soldier\Soldier.cs" line="324" />
-      <Breakpoint file="H:\Study tools\Unity\Unity_Project\COC\COC\Assets\Script\Game\Soldier\Soldier.cs" line="335" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

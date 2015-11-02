@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using Pathfinding;
+using System.Collections.Generic;
 
 [Serializable]
 public enum SoldierType
@@ -30,7 +31,7 @@ public enum PreferAttackType
 }
 
 [Serializable]
-public class Soldier : MonoBehaviour {
+public class Soldier : MonoBehaviour, GameObjectType {
 
 	//public SoldierType mST;
 	
@@ -84,6 +85,8 @@ public class Soldier : MonoBehaviour {
 		}
 	}
 	protected Building mOldAttackingObject;
+
+	private List<Building> mCurrentCalculatingPaths = null;
 
 	public Building ShortestPathTarget
 	{
@@ -218,6 +221,25 @@ public class Soldier : MonoBehaviour {
 	}
 	private float mNearestReachableTargetDistance = 0.0f;
 
+	public ObjectType GameType
+	{
+		get
+		{
+			return mGameType;
+		}
+		set
+		{
+			mGameType = value;
+		}
+	}
+	private ObjectType mGameType;
+
+	private GameObject mDetectionRangeCollider;
+	
+	private SoldierDetectRange mDetectionRange;
+
+	public float mDetectionDistance;
+
 	public virtual void Awake()
 	{
 		Debug.Log("Soldier's Position = " + gameObject.transform.position);
@@ -246,6 +268,14 @@ public class Soldier : MonoBehaviour {
 		mSDeadState = new SoldierDeadState (this);
 
 		mAttackablePositions = new Vector3[8];
+	
+		mGameType = ObjectType.EOT_SOLDIER;
+		Debug.Log ("Soldier::Awake() mGameType = " + mGameType);
+
+		mDetectionRangeCollider = gameObject.transform.Find ("AttackRangeCollider").gameObject;
+		mDetectionRangeCollider.GetComponent<SphereCollider> ().radius = mDetectionDistance;
+		Debug.Log ("DetectionDistance = " + mDetectionDistance);
+		mDetectionRange = mDetectionRangeCollider.GetComponent<SoldierDetectRange> ();
 	}
 
 	public void Start()
@@ -298,14 +328,32 @@ public class Soldier : MonoBehaviour {
 		}
 	}
 
+	private Building ObtainAttackObjectInDetectionRange()
+	{
+		mCurrentCalculatingPaths = mDetectionRange.RangeTargetList;
+		CalculateAllPathsInfo(mDetectionRange.RangeTargetList);
+
+		return mShortestPathObject;
+	}
+
 	public void MakeDecision()
 	{
 		if (gameObject != null && !mIsDead) {
+			mDetectionRange.RangeTargetList.RemoveAll(item => item.mBI.IsDestroyed);
 			mOldAttackingObject = mAttackingObject;
 			if(ShouldChangeAttackTarget())
 			{
-				CalculateAllPathsInfo();
-				mAttackingObject= GameManager.mGameInstance.ObtainAttackObject (this);
+				//mAttackingObject = null;
+				Debug.Log ("mDetectionRange.RangeTargetList.Count = " + mDetectionRange.RangeTargetList.Count);
+				mAttackingObject = ObtainAttackObjectInDetectionRange();
+				//CalculateAllPathsInfo(MapManager.mMapInstance.NullWallBuildingsInfoInGame);
+				//Otherwise chose one as attack target in whole map
+				if(mAttackingObject == null)
+				{
+					Debug.Log("Chose Target From Whole Map");
+				    mAttackingObject= GameManager.mGameInstance.ObtainAttackObject (this);
+				}
+
 				if(mAttackingObject != mOldAttackingObject && mAttackingObject!=null)
 				{
 					CalculatePath();
@@ -314,7 +362,7 @@ public class Soldier : MonoBehaviour {
 		}
 	}
 
-	private void CalculateAllPathsInfo()
+	private void CalculateAllPathsInfo(List<Building> bds)
 	{
 		//If any paths are currently being calculated, cancel them to avoid wasting processing power
 		if (mLastPaths != null)
@@ -322,11 +370,11 @@ public class Soldier : MonoBehaviour {
 			for (int i=0; i<mLastPaths.Length; i++) {
 				mLastPaths [i].Error ();
 			}
-		
+
 		//Create a new lastPaths array if necessary (can reuse the old one?)
 		int validbuildingnumbers = 0; //= MapManager.mMapInstance.NullWallBuildingNumber;
-		int nullwallbuildingnumbers = MapManager.mMapInstance.NullWallBuildingNumber;
-		foreach (Building nwbd in MapManager.mMapInstance.NullWallBuildingsInfoInGame) {
+		int nullwallbuildingnumbers = bds.Count;
+		foreach (Building nwbd in bds) {
 			if(nwbd.mBI.IsDestroyed != true)
 			{
 				validbuildingnumbers++;
@@ -352,9 +400,11 @@ public class Soldier : MonoBehaviour {
 			{
 			*/
 				Debug.Log ("CalculateAllPathsInfo() called");
-				bd = MapManager.mMapInstance.NullWallBuildingsInfoInGame[i];
+				bd = bds[i];
 				if(bd.mBI.IsDestroyed!=true)
 				{
+					Debug.Log ("transform.position = " + transform.position);
+					Debug.Log ("bd.transform.position = " + bd.transform.position);
 					ABPath p = ABPath.Construct (transform.position, bd.transform.position, OnPathInfoComplete);
 					mLastPaths[pathindex] = p;
 					AstarPath.StartPath (p);
@@ -432,6 +482,7 @@ public class Soldier : MonoBehaviour {
 
 	private IEnumerator WaitForPathCalculation()
 	{
+		Debug.Log ("mAttackingObject.transform.position = " + mAttackingObject.transform.position);
 		mAStarPath = mSeeker.StartPath(transform.position, mAttackingObject.transform.position, OnPathComplete);
 		yield return StartCoroutine (mAStarPath.WaitForPath ());
 		//float temppathlength = 0.0f;
@@ -449,6 +500,8 @@ public class Soldier : MonoBehaviour {
 				//Debug.Log ("mAStarPath == null");
 			//}
 			mCurrentWayPoint = 0;
+			float targetpositiondistance = Vector3.Distance (mAttackingObject.transform.position, path.vectorPath [path.vectorPath.Count - 1]);
+			Debug.Log ("targetpositiondistance = " + targetpositiondistance);
 		} else {
 			Debug.Log ("Oh noes, the target was not reachable: "+path.errorLog);
 			mAStarPath = null;
@@ -500,7 +553,7 @@ public class Soldier : MonoBehaviour {
 			if (shortest == null || length < mShortestTargetPathLength) {
 				shortest = mLastPaths[i];
 				mShortestTargetPathLength = length;
-				mShortestPathObject = MapManager.mMapInstance.BuildingsInfoInGame[i];				
+				mShortestPathObject = mCurrentCalculatingPaths[i];				
 			}
 		}
 		Debug.Log ("mShortestTargetPathLength = "+ mShortestTargetPathLength);

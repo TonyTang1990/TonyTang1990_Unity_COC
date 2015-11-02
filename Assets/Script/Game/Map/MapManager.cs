@@ -205,6 +205,9 @@ public class MapManager : MonoBehaviour {
 			position = new Vector3(bdi.Position.x,bdi.Position.y,bdi.Position.z);
 			bd = Instantiate(mBuildings[(int)bdi.getBuildingType()],position,Quaternion.identity) as GameObject;
 			bd.GetComponent<Building>().mBI.Position = position;
+
+			Debug.Log ("bd.GetComponent<GameObjectType>().GameType = " + bd.GetComponent<GameObjectType>().GameType);
+
 			mBuildingsInGame.Add(bd);
 			mBuildingsInfoInGame.Add(bd.GetComponent<Building>());
 			if(bdi.getBuildingType() != BuildingType.E_WALL)

@@ -47,9 +47,27 @@ GameObject:
   - 114: {fileID: 11416148}
   - 65: {fileID: 6564260}
   - 114: {fileID: 11449256}
+  - 54: {fileID: 5458376}
   m_Layer: 11
   m_Name: House
   m_TagString: Building
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &195858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 445696}
+  - 135: {fileID: 13501776}
+  - 114: {fileID: 11425026}
+  m_Layer: 2
+  m_Name: AttackRangeCollider
+  m_TagString: AttackRange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,6 +96,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 449750}
   m_RootOrder: 1
+--- !u!4 &445696
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 449750}
+  m_RootOrder: 2
 --- !u!4 &449750
 Transform:
   m_ObjectHideFlags: 1
@@ -90,6 +120,7 @@ Transform:
   m_Children:
   - {fileID: 424190}
   - {fileID: 435790}
+  - {fileID: 445696}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &2351488
@@ -147,6 +178,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 130422}
   m_Mesh: {fileID: 4300000, guid: eec0a941ebb666b458f6523bd925c87d, type: 3}
+--- !u!54 &5458376
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130422}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &6564260
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -218,6 +264,17 @@ MonoBehaviour:
   mHouseBullet: {fileID: 136182, guid: 08616df76fa4b8b4d9d2c43a2367448c, type: 2}
   mAttackInterval: 1
   mAttackDistance: 8
+--- !u!114 &11425026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf59418e0253504f82ae4f08c8b6dd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11438294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,6 +299,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateError: .200000003
   checkTime: .200000003
+--- !u!135 &13501776
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195858}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
